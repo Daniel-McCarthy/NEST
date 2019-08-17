@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>vertex.vsh</file>
         <file>fragment.fsh</file>
+        <file>Nest.ico</file>
     </qresource>
 </RCC>

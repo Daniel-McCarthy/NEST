@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     canvas->stackUnder(ui->menuBar);
     ui->menuBar->raise();
 
+
+    setWindowIcon(QIcon(":/Nest.ico"));
+
     hLayout = new QHBoxLayout(ui->centralWidget);
     hLayout->setContentsMargins(0,0,0,0);
     hLayout->addWidget(canvas);
