@@ -29,14 +29,16 @@ SOURCES += \
     src/Canvas.cpp \
     src/Core.cpp \
     src/Cpu.cpp \
-    src/Input.cpp
+    src/Input.cpp \
+    src/Binary.cpp
 
 HEADERS += \
         src/MainWindow/MainWindow.h \
     src/Canvas.h \
     src/Core.h \
     src/Cpu.h \
-    src/Input.h
+    src/Input.h \
+    src/Binary.h
 
 FORMS += \
         src/MainWindow/MainWindow.ui
