@@ -121,6 +121,8 @@ public:
     ~Ppu();
     unsigned char readPPURamByte(ushort address);
     void writePPURamByte(ushort address, unsigned char value);
+    unsigned char readOAMRamByte(ushort address);
+    void writeOAMRamByte(ushort address, unsigned char value);
 
 };
 
