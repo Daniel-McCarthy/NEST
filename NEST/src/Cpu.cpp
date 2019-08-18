@@ -1928,6 +1928,20 @@ void Cpu::opcodeC6() {
 
 }
 
+void Cpu::opcodeC8() {
+    //Increment Y address value
+
+    ++yAddress;
+
+    setFlagTo(Zero_Flag, yAddress == 0);
+    setFlagTo(Negative_Flag, (yAddress & 0x80) == 0x80);
+
+    mClock += 1;
+    tClock += 4;
+
+    //2 cycles
+}
+
 void Cpu::opcodeC9() {
     //Compare value of accumulator with Immediate byte
 
@@ -2167,6 +2181,24 @@ void Cpu::opcodeE4() {
     //3 Cycles. 1 cycle reading opcode byte and 1 cycle reading opcode argument address byte, 1 cycle reading value from Zero Page.
 }
 
+void Cpu::opcodeE6() {
+    //Increment data at Zero page address
+
+    uchar address = readImmediateByte();
+    uchar value = readCPURam(address);
+    ++value;
+
+    writeCPURam(address, value);
+
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    mClock += 2;
+    tClock += 8;
+
+    //5 cycles
+}
+
 void Cpu::opcodeEC() {
    //CPX: Compare value of X Register with value at absolute Address
 
@@ -2180,6 +2212,20 @@ void Cpu::opcodeEC() {
    //4 Cycles. 1 cycle for opcode byte. 2 cycles for immediate ushort. 1 cycle for reading from Zero Page.
 }
 
+void Cpu::opcodeE8() {
+    //Increment data at Zero page address
+
+    ++xAddress;
+
+    setFlagTo(Zero_Flag, xAddress == 0);
+    setFlagTo(Negative_Flag, (xAddress & 0x80) == 0x80);
+
+    mClock += 1;
+    tClock += 4;
+
+    //2 cycles
+}
+
 void Cpu::opcodeEA() {
     //NOP
 
@@ -2187,6 +2233,24 @@ void Cpu::opcodeEA() {
     tClock += 4;
 
     //2 cycles
+}
+
+void Cpu::opcodeEE() {
+    //Increment data at absolute address
+
+    ushort address = readImmediateUShort();
+    uchar value = readCPURam(address);
+    ++value;
+
+    writeCPURam(address, value);
+
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    mClock += 2;
+    tClock += 8;
+
+    //6 cycles
 }
 
 void Cpu::opcodeF0() {
@@ -2218,6 +2282,44 @@ void Cpu::opcodeF4() {
     tClock += 12;
 
     // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
+}
+
+void Cpu::opcodeF6() {
+    //Increment data at Zero page + X address
+
+    uchar address = readImmediateByte();
+    address += xAddress;
+    uchar value = readCPURam(address);
+    ++value;
+
+    writeCPURam(address, value);
+
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    mClock += 3;
+    tClock += 12;
+
+    //6 cycles
+}
+
+void Cpu::opcodeFE() {
+    //Increment data at absolute + X address
+
+    ushort address = readImmediateUShort();
+    address += xAddress;
+    uchar value = readCPURam(address);
+    ++value;
+
+    writeCPURam(address, value);
+
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    mClock += 3;
+    tClock += 12;
+
+    //7 cycles
 }
 
 /*

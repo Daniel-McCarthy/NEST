@@ -183,6 +183,7 @@ private:
     void opcodeC4();
     void opcodeC5();
     void opcodeC6();
+    void opcodeC8();
     void opcodeC9();
     void opcodeCA();
     void opcodeCC();
@@ -200,10 +201,15 @@ private:
     void opcodeE0();
     void opcodeE2();
     void opcodeE4();
+    void opcodeE6();
+    void opcodeE8();
     void opcodeEA();
     void opcodeEC();
+    void opcodeEE();
     void opcodeF0();
     void opcodeF4();
+    void opcodeF6();
+    void opcodeFE();
 
 public:
     unsigned short programCounter = 0x8000;                                 //Tracks position in the program
