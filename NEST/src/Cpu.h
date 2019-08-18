@@ -67,6 +67,10 @@ public:
     unsigned char readCPURam(ushort address, bool ignoreCycles = false);
     void writeCPURam(ushort address, uchar value, bool ignoreCycles = false);
     void  directCPURamWrite(ushort address, uchar value);
+    void pushStackU8(uchar value);
+    void pushStackU16(ushort value);
+    uchar popStackU8();
+    ushort popStackU16();
 
 public slots:
 };

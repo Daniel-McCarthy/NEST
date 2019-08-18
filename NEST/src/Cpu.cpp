@@ -56,3 +56,23 @@ void Cpu::writeCPURam(ushort address, uchar value, bool ignoreCycles) {
 void  Cpu::directCPURamWrite(ushort address, uchar value) {
     cpuRam[address] = value;
 }
+
+void Cpu::pushStackU8(uchar value) {
+    writeCPURam((ushort)(0x100 | stackPointer), value);
+    stackPointer--;
+}
+
+void Cpu::pushStackU16(ushort value) {
+    pushStackU8((uchar)((value >> 8) & 0xFF));
+    pushStackU8((uchar)(value & 0xFF));
+}
+
+uchar Cpu::popStackU8()
+{
+    stackPointer++;
+    return readCPURam((ushort)(0x100 | stackPointer));
+}
+
+ushort Cpu::popStackU16() {
+    return (ushort)(popStackU8() | (popStackU8() << 8));
+}
