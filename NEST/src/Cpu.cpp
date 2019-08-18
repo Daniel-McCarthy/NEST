@@ -206,6 +206,17 @@ void Cpu::opcode06() {
     tClock += 8;
 }
 
+void Cpu::opcode08() {
+    //PHP: Pushes value in status onto stack
+
+    pushStackU8((uchar)(statusRegister | Empty_Flag | Breakpoint_Flag));
+
+    //3 cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode09() {
     //Bitwise OR A Immediate Byte
 
@@ -426,6 +437,17 @@ void Cpu::opcode26() {
 
     setFlagTo(Zero_Flag, (value == 0));
     setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode28() {
+    //PLP: Pops value from stack into status register
+
+    statusRegister = (uchar)(popStackU8() | Empty_Flag);
+
+    //4 cycles
 
     mClock += 2;
     tClock += 8;
@@ -680,6 +702,17 @@ void Cpu::opcode46() {
     tClock += 8;
 }
 
+void Cpu::opcode48() {
+    //PHA: Pushes value in accumulator onto stack
+
+    pushStackU8(accumulator);
+
+    //3 cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode49() {
     //Bitwise XOR A with Immediate byte
 
@@ -859,6 +892,20 @@ void Cpu::opcode66() {
 
     setFlagTo(Zero_Flag, (value == 0));
     setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode68() {
+    //PLA: Pops value from stack into accumulator
+
+    accumulator = popStackU8();
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    //4 cycles
 
     mClock += 2;
     tClock += 8;
