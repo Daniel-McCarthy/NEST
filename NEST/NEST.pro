@@ -27,12 +27,14 @@ SOURCES += \
         src/main.cpp \
         src/MainWindow/MainWindow.cpp \
     src/Canvas.cpp \
-    src/Core.cpp
+    src/Core.cpp \
+    src/Cpu.cpp
 
 HEADERS += \
         src/MainWindow/MainWindow.h \
     src/Canvas.h \
-    src/Core.h
+    src/Core.h \
+    src/Cpu.h
 
 FORMS += \
         src/MainWindow/MainWindow.ui

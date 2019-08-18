@@ -2,11 +2,17 @@
 #include <QCoreApplication>
 
 Core::Core(QWidget *parent)
-    : QObject(parent)
+    : QObject(parent),
+        cpu()
 {
 }
 
 Core::~Core() {
+
+Cpu* Core::getCPUPointer() {
+    return &cpu;
+}
+
 }
 
 void Core::emulationLoop() {

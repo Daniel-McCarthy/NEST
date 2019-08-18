@@ -1,6 +1,7 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include "src/Cpu.h"
 #include <QWidget>
 
 class Core : public QObject
@@ -9,6 +10,7 @@ class Core : public QObject
 public:
     explicit Core(QWidget *parent = 0);
     virtual ~Core();
+    Cpu* getCPUPointer();
 
     bool run = false;
     bool paused = false;
@@ -21,6 +23,7 @@ public:
     void emulationLoop();
 
 private:
+    Cpu cpu;
 
 signals:
 
