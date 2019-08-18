@@ -67,6 +67,11 @@ private:
     void opcode19();
     void opcode1E();
     void opcode1D();
+    void opcode26();
+    void opcode2A();
+    void opcode2E();
+    void opcode36();
+    void opcode3E();
     void opcode46();
     void opcode4A();
     void opcode4E();

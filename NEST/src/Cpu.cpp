@@ -2,6 +2,7 @@
 #include "Cpu.h"
 #include "Binary.h"
 #include "Rom.h"
+
 Cpu::Cpu(Input& input)
     : input(input)
 {
@@ -331,6 +332,127 @@ void Cpu::opcode1E() {
     setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
 
     value <<= 1;
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode26() {
+    //Bitwise Left Rotate of Zero Page Value
+
+    ushort address = readImmediateByte();
+    uchar value = readCPURam(address);
+
+    bool oldCarry = getFlagStatus(Carry_Flag);
+    setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
+
+    value <<= 1;
+
+    if (oldCarry)
+    {
+        value |= 0x1;
+    }
+
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode2A() {
+    //Bitwise Left Rotate of Accumulator
+
+    //Set carry flag to old bit 7
+    bool oldCarry = getFlagStatus(Carry_Flag);
+    setFlagTo(Carry_Flag, (accumulator & 0x80) == 0x80);
+    accumulator <<= 1;
+
+    //Set new bit 0 to previous carry flag
+    if (oldCarry)
+    {
+        accumulator |= 0x1;
+    }
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode2E() {
+    //Bitwise Left Rotate of value at absolute address
+
+    ushort address = readImmediateUShort();
+    uchar value = readCPURam(address);
+
+    bool oldCarry = getFlagStatus(Carry_Flag);
+    setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
+
+    value <<= 1;
+
+    if (oldCarry)
+    {
+        value |= 0x01;
+    }
+
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode36() {
+    //Bitwise Left Rotate of value at Zero Page X address
+
+    ushort address = (ushort)(readImmediateByte() + xAddress);
+    uchar value = readCPURam(address);
+
+    bool oldCarry = getFlagStatus(Carry_Flag);
+    setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
+
+    value <<= 1;
+
+    if (oldCarry)
+    {
+        value |= 0x01;
+    }
+
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode3E() {
+    //Bitwise Left Rotate of value at absolute X address
+
+    ushort address = (ushort)(readImmediateUShort() + xAddress);
+    uchar value = readCPURam(address);
+
+    bool oldCarry = getFlagStatus(Carry_Flag);
+    setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
+
+    value <<= 1;
+
+    if (oldCarry)
+    {
+        value |= 0x01;
+    }
+
     writeCPURam(address, (uchar)(value));
 
     setFlagTo(Zero_Flag, (value == 0));
