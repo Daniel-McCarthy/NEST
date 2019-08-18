@@ -280,6 +280,27 @@ void Cpu::opcode0E() {
     tClock += 8;
 }
 
+void Cpu::opcode10() {
+    //BPL: Branch if Negative Flag disabled
+
+    if (!getFlagStatus(Negative_Flag))
+    {
+        signed char signedByte = (signed char)readImmediateByte();
+        programCounter = (ushort)(programCounter + signedByte);
+    }
+    else
+    {
+        // Skip operand byte.
+        programCounter++;
+    }
+
+    //TODO: Add Cycle if branched to a new page
+    //2 cycles. +1 cycle if branch successful. +2 cycles if branched to a new page.
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode11() {
     //Bitwise OR A Indirect Indexed Y
 
@@ -540,6 +561,27 @@ void Cpu::opcode2E() {
     tClock += 8;
 }
 
+void Cpu::opcode30() {
+    //BMI: Branch if Negative Flag enabled
+
+    if (getFlagStatus(Negative_Flag))
+    {
+        signed char signedByte = (signed char)readImmediateByte();
+        programCounter = (ushort)(programCounter + signedByte);
+    }
+    else
+    {
+        // Skip operand byte.
+        programCounter++;
+    }
+
+    //TODO: Add Cycle if branched to a new page
+    //2 cycles. +1 cycle if branch successful. +2 cycles if branched to a new page.
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode31() {
     //Bitwise And A Indirect Indexed Y
 
@@ -769,6 +811,27 @@ void Cpu::opcode4E() {
     tClock += 8;
 }
 
+void Cpu::opcode50() {
+    //BVC: Branch if Overflow Flag disabled
+
+    if (!getFlagStatus(Overflow_Flag))
+    {
+        signed char signedByte = (signed char)readImmediateByte();
+        programCounter = (ushort)(programCounter + signedByte);
+    }
+    else
+    {
+        // Skip operand byte.
+        programCounter++;
+    }
+
+    //TODO: Add Cycle if branched to a new page
+    //2 cycles. +1 cycle if branch successful. +2 cycles if branched to a new page.
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode51() {
     //Bitwise XOR A Indirect Indexed Y
 
@@ -957,6 +1020,27 @@ void Cpu::opcode6E() {
     tClock += 8;
 }
 
+void Cpu::opcode70() {
+    //BVS: Branch if Overflow Flag enabled
+
+    if (getFlagStatus(Overflow_Flag))
+    {
+        signed char signedByte = (signed char)readImmediateByte();
+        programCounter = (ushort)(programCounter + signedByte);
+    }
+    else
+    {
+        // Skip operand byte.
+        programCounter++;
+    }
+
+    //TODO: Add Cycle if branched to a new page
+    //2 cycles. +1 cycle if branch successful. +2 cycles if branched to a new page.
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode74() {
     //Unofficial Opcode: NOP with zero page + X read
     programCounter++;
@@ -1047,6 +1131,48 @@ void Cpu::opcode89() {
     // 2 cycles total. Read opcode byte, and operand byte.
 }
 
+void Cpu::opcode90() {
+    //BCC: Branch if Carry Flag disabled
+
+    if(!getFlagStatus(Carry_Flag))
+    {
+        signed char signedByte = (signed char)readImmediateByte();
+        programCounter = (ushort)(programCounter + signedByte);
+    }
+    else
+    {
+        // Skip operand byte.
+        programCounter++;
+    }
+
+    //TODO: Add Cycle if branched to a new page
+    //2 cycles. +1 cycle if branch successful. +2 cycles if branched to a new page.
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcodeB0() {
+    //BCS: Branch if Carry Flag enabled
+
+    if (getFlagStatus(Carry_Flag))
+    {
+        signed char signedByte = (signed char)readImmediateByte();
+        programCounter = (ushort)(programCounter + signedByte);
+    }
+    else
+    {
+        // Skip operand byte.
+        programCounter++;
+    }
+
+    //TODO: Add Cycle if branched to a new page
+    //2 cycles. +1 cycle if branch successful. +2 cycles if branched to a new page.
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcodeC2() {
     //Unofficial Opcode: NOP with immediate read
     programCounter++;
@@ -1055,6 +1181,27 @@ void Cpu::opcodeC2() {
     tClock += 4;
 
     // 2 cycles total. Read opcode byte, and operand byte.
+}
+
+void Cpu::opcodeD0() {
+    //BNE: Branch if Zero Flag disabled
+
+    if (!getFlagStatus(Zero_Flag))
+    {
+        signed char signedByte = (signed char)readImmediateByte();
+        programCounter = (ushort)(programCounter + signedByte);
+    }
+    else
+    {
+        // Skip operand byte.
+        programCounter++;
+    }
+
+    //TODO: Add Cycle if branched to a new page
+    //2 cycles. +1 cycle if branch successful. +2 cycles if branched to a new page.
+
+    mClock += 1;
+    tClock += 4;
 }
 
 void Cpu::opcodeD4() {
@@ -1084,6 +1231,27 @@ void Cpu::opcodeEA() {
     tClock += 4;
 
     //2 cycles
+}
+
+void Cpu::opcodeF0() {
+    //BEQ: Branch if Zero Flag enabled
+
+    if (getFlagStatus(Zero_Flag))
+    {
+        signed char signedByte = (signed char)readImmediateByte();
+        programCounter = (ushort)(programCounter + signedByte);
+    }
+    else
+    {
+        // Skip operand byte.
+        programCounter++;
+    }
+
+    //TODO: Add Cycle if branched to a new page
+    //2 cycles. +1 cycle if branch successful. +2 cycles if branched to a new page.
+
+    mClock += 1;
+    tClock += 4;
 }
 
 void Cpu::opcodeF4() {
