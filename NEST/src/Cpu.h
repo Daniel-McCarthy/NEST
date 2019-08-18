@@ -73,6 +73,7 @@ private:
     void opcode19();
     void opcode1E();
     void opcode1D();
+    void opcode20();
     void opcode21();
     void opcode24();
     void opcode25();
@@ -97,6 +98,7 @@ private:
     void opcode46();
     void opcode48();
     void opcode49();
+    void opcode4C();
     void opcode4D();
     void opcode4A();
     void opcode4E();
@@ -113,6 +115,7 @@ private:
     void opcode66();
     void opcode68();
     void opcode6A();
+    void opcode6C();
     void opcode6E();
     void opcode70();
     void opcode74();

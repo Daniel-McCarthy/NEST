@@ -408,6 +408,18 @@ void Cpu::opcode1E() {
     tClock += 8;
 }
 
+void Cpu::opcode20() {
+    //Jump to subroutine at absolute address
+
+    ushort newPC = readImmediateUShort();
+    pushStackU16((ushort)(programCounter - 1));
+    programCounter = newPC;
+
+    //6 cycles
+    mClock += 2;
+    tClock += 8;
+}
+
 void Cpu::opcode21() {
     //Bitwise And A with Indexed Indirect X
 
@@ -792,6 +804,14 @@ void Cpu::opcode4A() {
     tClock += 8;
 }
 
+void Cpu::opcode4C() {
+    //Jump to absolute address
+
+    programCounter = readImmediateUShort();
+
+    //3 cycles
+}
+
 void Cpu::opcode4D() {
     //Bitwise XOR A with absolute address
 
@@ -1015,6 +1035,30 @@ void Cpu::opcode6A() {
 
     mClock += 2;
     tClock += 8;
+}
+
+void Cpu::opcode6C() {
+    //Jump to indirect address
+
+    ushort addressLocation = readImmediateUShort();
+    ushort address = 0;
+    bool jumpBug = (addressLocation & 0xFF) == 0xFF;
+
+    //6502 Bug:
+    if (jumpBug)
+    {
+        address |= readCPURam(addressLocation);
+        address |= (ushort)(readCPURam((ushort)(addressLocation & 0xFF00)) << 8);
+    }
+    else
+    {
+        address |= readCPURam(addressLocation);
+        address |= (ushort)(readCPURam((ushort)(addressLocation + 1)) << 8);
+    }
+
+    programCounter = address;
+
+    //3 cycles
 }
 
 void Cpu::opcode6E() {
