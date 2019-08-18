@@ -68,10 +68,12 @@ private:
     void opcode1E();
     void opcode1D();
     void opcode21();
+    void opcode24();
     void opcode25();
     void opcode26();
     void opcode29();
     void opcode2A();
+    void opcode2C();
     void opcode2D();
     void opcode2E();
     void opcode31();

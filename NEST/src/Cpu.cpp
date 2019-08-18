@@ -354,6 +354,22 @@ void Cpu::opcode21() {
     tClock += 4;
 }
 
+void Cpu::opcode24() {
+    //Bitwise Test of Zero Page value with Bit Mask in Accumulator
+
+    ushort address = readImmediateByte();
+
+    //Store bit 7 and 6 in Negative and Overflow flags respectively.
+    uchar value = readCPURam(address);
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+    setFlagTo(Overflow_Flag, (value & 0x40) != 0);
+
+    value &= accumulator;
+    setFlagTo(Zero_Flag, (value == 0));
+
+    // 3 cycles total. Read opcode byte, operand byte, and read value from address.
+}
+
 void Cpu::opcode25() {
     //Bitwise And A with Zero Page Immediate Byte
 
@@ -422,6 +438,23 @@ void Cpu::opcode2A() {
 
     mClock += 2;
     tClock += 8;
+}
+
+void Cpu::opcode2C() {
+    //Bitwise Test of value at absolute address with Bit Mask in Accumulator
+
+    ushort address = readImmediateUShort();
+
+    //Store bit 7 and 6 in Negative and Overflow flags respectively.
+    uchar value = readCPURam(address);
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+    setFlagTo(Overflow_Flag, (value & 0x40) != 0);
+
+    //Mask value with accumulator value and set Zero flag
+    value &= accumulator;
+    setFlagTo(Zero_Flag, (value == 0));
+
+    // 4 cycles total. Read opcode byte, 2 operand bytes, and read value from address.
 }
 
 void Cpu::opcode2D() {
