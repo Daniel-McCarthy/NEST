@@ -55,13 +55,16 @@ private:
 
     void opcode00();
     void opcode01();
+    void opcode04();
     void opcode05();
     void opcode06();
     void opcode09();
     void opcode0A();
+    void opcode0C();
     void opcode0D();
     void opcode0E();
     void opcode11();
+    void opcode14();
     void opcode15();
     void opcode16();
     void opcode19();
@@ -77,12 +80,14 @@ private:
     void opcode2D();
     void opcode2E();
     void opcode31();
+    void opcode34();
     void opcode35();
     void opcode36();
     void opcode39();
     void opcode3D();
     void opcode3E();
     void opcode41();
+    void opcode44();
     void opcode45();
     void opcode46();
     void opcode49();
@@ -90,16 +95,27 @@ private:
     void opcode4A();
     void opcode4E();
     void opcode51();
+    void opcode54();
     void opcode55();
     void opcode56();
     void opcode59();
     void opcode5D();
     void opcode5E();
+    void opcode64();
     void opcode66();
     void opcode6A();
     void opcode6E();
+    void opcode74();
     void opcode76();
     void opcode7E();
+    void opcode80();
+    void opcode82();
+    void opcode89();
+    void opcodeC2();
+    void opcodeD4();
+    void opcodeE2();
+    void opcodeEA();
+    void opcodeF4();
 
 public:
     unsigned short programCounter = 0x8000;                                 //Tracks position in the program

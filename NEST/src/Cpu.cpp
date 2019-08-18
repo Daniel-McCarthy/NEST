@@ -169,6 +169,13 @@ void Cpu::opcode01() {
     tClock += 8;
 }
 
+void Cpu::opcode04() {
+    //Unofficial Opcode: NOP with zero page read
+    readCPURam(readImmediateByte());
+
+    // 3 cycles total. Read opcode byte, operand byte, and read value from address.
+}
+
 void Cpu::opcode05() {
     //Bitwise OR A Zero Page
 
@@ -225,6 +232,13 @@ void Cpu::opcode0A() {
     tClock += 8;
 }
 
+void Cpu::opcode0C() {
+    //Unofficial Opcode: NOP with absolute address read
+    readCPURam(readImmediateUShort());
+
+    // 4 cycles total. Read opcode byte, 2 operand bytes, and read value from address.
+}
+
 void Cpu::opcode0D() {
     //Bitwise OR A Absolute 16 Bit Address
 
@@ -266,6 +280,16 @@ void Cpu::opcode11() {
 
     mClock += 2;
     tClock += 8;
+}
+
+void Cpu::opcode14() {
+    //Unofficial Opcode: NOP with zero page + X read
+    programCounter++;
+
+    mClock += 3;
+    tClock += 12;
+
+    // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
 }
 
 void Cpu::opcode15() {
@@ -507,6 +531,16 @@ void Cpu::opcode31() {
     tClock += 8;
 }
 
+void Cpu::opcode34() {
+    //Unofficial Opcode: NOP with zero page + X read
+    programCounter++;
+
+    mClock += 3;
+    tClock += 12;
+
+    // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
+}
+
 void Cpu::opcode35() {
     //Bitwise And A with Zero Page X
 
@@ -609,6 +643,13 @@ void Cpu::opcode41() {
     tClock += 8;
 }
 
+void Cpu::opcode44() {
+    //Unofficial Opcode: NOP with zero page read
+    readCPURam(readImmediateByte());
+
+    // 3 cycles total. Read opcode byte, operand byte, and read value from address.
+}
+
 void Cpu::opcode45() {
     //Bitwise XOR A with Zero Page address
 
@@ -708,6 +749,16 @@ void Cpu::opcode51() {
     tClock += 8;
 }
 
+void Cpu::opcode54() {
+    //Unofficial Opcode: NOP with zero page + X read
+    programCounter++;
+
+    mClock += 3;
+    tClock += 12;
+
+    // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
+}
+
 void Cpu::opcode55() {
     //Bitwise XOR A with Zero Page X address
 
@@ -781,6 +832,13 @@ void Cpu::opcode5E() {
     tClock += 8;
 }
 
+void Cpu::opcode64() {
+    //Unofficial Opcode: NOP with zero page read
+    readCPURam(readImmediateByte());
+
+    // 3 cycles total. Read opcode byte, operand byte, and read value from address.
+}
+
 void Cpu::opcode66() {
     //Bitwise Right Rotate of Zero Page Value
 
@@ -852,6 +910,16 @@ void Cpu::opcode6E() {
     tClock += 8;
 }
 
+void Cpu::opcode74() {
+    //Unofficial Opcode: NOP with zero page + X read
+    programCounter++;
+
+    mClock += 3;
+    tClock += 12;
+
+    // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
+}
+
 void Cpu::opcode76() {
     //Bitwise Right Rotate of value at Zero Page X address
 
@@ -900,6 +968,85 @@ void Cpu::opcode7E() {
 
     mClock += 2;
     tClock += 8;
+}
+
+void Cpu::opcode80() {
+    //Unofficial Opcode: NOP with immediate read
+    programCounter++;
+
+    mClock += 1;
+    tClock += 4;
+
+    // 2 cycles total. Read opcode byte, and operand byte.
+}
+
+void Cpu::opcode82() {
+    //Unofficial Opcode: NOP with immediate read
+    programCounter++;
+
+    mClock += 1;
+    tClock += 4;
+
+    // 2 cycles total. Read opcode byte, and operand byte.
+}
+
+void Cpu::opcode89() {
+    //Unofficial Opcode: NOP with immediate read
+    programCounter++;
+
+    mClock += 1;
+    tClock += 4;
+
+    // 2 cycles total. Read opcode byte, and operand byte.
+}
+
+void Cpu::opcodeC2() {
+    //Unofficial Opcode: NOP with immediate read
+    programCounter++;
+
+    mClock += 1;
+    tClock += 4;
+
+    // 2 cycles total. Read opcode byte, and operand byte.
+}
+
+void Cpu::opcodeD4() {
+    //Unofficial Opcode: NOP with zero page + X read
+    programCounter++;
+
+    mClock += 3;
+    tClock += 12;
+
+    // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
+}
+
+void Cpu::opcodeE2() {
+    //Unofficial Opcode: NOP with immediate read
+    programCounter++;
+
+    mClock += 1;
+    tClock += 4;
+
+    // 2 cycles total. Read opcode byte, and operand byte.
+}
+
+void Cpu::opcodeEA() {
+    //NOP
+
+    mClock += 1;
+    tClock += 4;
+
+    //2 cycles
+}
+
+void Cpu::opcodeF4() {
+    //Unofficial Opcode: NOP with zero page + X read
+    programCounter++;
+
+    mClock += 3;
+    tClock += 12;
+
+    // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
 }
 
 /*
