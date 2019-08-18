@@ -341,6 +341,31 @@ void Cpu::opcode1E() {
     tClock += 8;
 }
 
+void Cpu::opcode21() {
+    //Bitwise And A with Indexed Indirect X
+
+    uchar value = indexedIndirect(readImmediateByte());
+    accumulator = ((uchar)(accumulator & value));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode25() {
+    //Bitwise And A with Zero Page Immediate Byte
+
+    accumulator = ((uchar)(accumulator & readCPURam(readImmediateByte())));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode26() {
     //Bitwise Left Rotate of Zero Page Value
 
@@ -366,6 +391,18 @@ void Cpu::opcode26() {
     tClock += 8;
 }
 
+void Cpu::opcode29() {
+    //Bitwise And A with Immediate Byte
+
+    accumulator = ((uchar)(accumulator & readImmediateByte()));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode2A() {
     //Bitwise Left Rotate of Accumulator
 
@@ -385,6 +422,18 @@ void Cpu::opcode2A() {
 
     mClock += 2;
     tClock += 8;
+}
+
+void Cpu::opcode2D() {
+    //Bitwise And A with absolute 16 bit Address
+
+    accumulator = ((uchar)(accumulator & absolute(readImmediateUShort())));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
 }
 
 void Cpu::opcode2E() {
@@ -412,6 +461,32 @@ void Cpu::opcode2E() {
     tClock += 8;
 }
 
+void Cpu::opcode31() {
+    //Bitwise And A Indirect Indexed Y
+
+    uchar value = indirectIndexed(readCPURam(programCounter++));
+    accumulator = ((uchar)(accumulator & value));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode35() {
+    //Bitwise And A with Zero Page X
+
+    uchar value = zeroPageIndexed(readImmediateByte(), xAddress);
+    accumulator = ((uchar)(accumulator & value));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
 void Cpu::opcode36() {
     //Bitwise Left Rotate of value at Zero Page X address
 
@@ -432,6 +507,32 @@ void Cpu::opcode36() {
 
     setFlagTo(Zero_Flag, (value == 0));
     setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode39() {
+    //Bitwise And A with Absolute + Y Address
+
+    uchar value = absolute(readImmediateUShort(), yAddress);
+    accumulator = ((uchar)(accumulator & value));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode3D() {
+    //Bitwise And A with Absolute + X Address
+
+    uchar value = absolute(readImmediateUShort(), xAddress);
+    accumulator = ((uchar)(accumulator & value));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
 
     mClock += 2;
     tClock += 8;
