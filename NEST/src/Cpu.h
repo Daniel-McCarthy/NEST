@@ -54,6 +54,14 @@ private:
     Input& input;
 
     void opcode00();
+    void opcode01();
+    void opcode05();
+    void opcode09();
+    void opcode0D();
+    void opcode11();
+    void opcode15();
+    void opcode19();
+    void opcode1D();
 
 public:
     unsigned short programCounter = 0x8000;                                 //Tracks position in the program

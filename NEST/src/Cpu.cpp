@@ -155,6 +155,104 @@ void Cpu::opcode00() {
     //7 Cycles
 }
 
+void Cpu::opcode01() {
+    //Bitwise OR A Indexed Indirect X
+
+    uchar value = indexedIndirect(readImmediateByte());
+    accumulator = ((uchar)(accumulator | value));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode05() {
+    //Bitwise OR A Zero Page
+
+    accumulator = ((uchar)(accumulator | readCPURam(readImmediateByte())));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode09() {
+    //Bitwise OR A Immediate Byte
+
+    accumulator = ((uchar)(accumulator | readImmediateByte()));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode0D() {
+    //Bitwise OR A Absolute 16 Bit Address
+
+    accumulator = (uchar)(accumulator | absolute(readImmediateUShort()));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode11() {
+    //Bitwise OR A Indirect Indexed Y
+
+    uchar value = indirectIndexed(readCPURam(programCounter++));
+    accumulator = ((uchar)(accumulator | value));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode15() {
+    //Bitwise OR A Zero Page X
+
+    accumulator = ((uchar)(accumulator | zeroPageIndexed(readImmediateByte(), xAddress)));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode19() {
+    //Bitwise OR A Absolute Y Index 16 Bit Address
+
+    accumulator = (uchar)(accumulator | absolute(readImmediateUShort(), yAddress));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode1D() {
+    //Bitwise OR A Absolute X Index 16 Bit Address
+
+    accumulator = (uchar)(accumulator | absolute(readImmediateUShort(), xAddress));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
 /*
  * @Name: setFlagTo
  * @Params: byte flag: This contains the bits representing the flag to modify status with.
