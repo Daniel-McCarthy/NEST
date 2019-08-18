@@ -354,6 +354,17 @@ void Cpu::opcode16() {
     tClock += 8;
 }
 
+void Cpu::opcode18() {
+    //CLC: Set carry flag to disabled
+
+    setFlagTo(Carry_Flag, false);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode19() {
     //Bitwise OR A Absolute Y Index 16 Bit Address
 
@@ -885,6 +896,17 @@ void Cpu::opcode56() {
     tClock += 8;
 }
 
+void Cpu::opcode58() {
+    //CLI: Set interrupt disable flag to disabled
+
+    setFlagTo(Interrupt_Disable_Flag, false);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode59() {
     //Bitwise XOR A with Absolute Y address
 
@@ -1173,6 +1195,17 @@ void Cpu::opcodeB0() {
     tClock += 4;
 }
 
+void Cpu::opcodeB8() {
+    //CLV: Set overflow flag to disabled
+
+    setFlagTo(Overflow_Flag, false);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcodeC2() {
     //Unofficial Opcode: NOP with immediate read
     programCounter++;
@@ -1212,6 +1245,17 @@ void Cpu::opcodeD4() {
     tClock += 12;
 
     // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
+}
+
+void Cpu::opcodeD8() {
+    //CLD: Set decimal flag to disabled
+
+    setFlagTo(Decimal_Mode_Flag, false);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
 }
 
 void Cpu::opcodeE2() {
