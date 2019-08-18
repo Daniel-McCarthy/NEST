@@ -8,6 +8,7 @@ Core::Core(QWidget *parent)
 }
 
 Core::~Core() {
+}
 
 Cpu* Core::getCPUPointer() {
     return &cpu;
@@ -33,14 +34,10 @@ void Core::emulationLoop() {
             TOTAL_CPU_CLOCKS += cpuClocks;
             TOTAL_PPU_CLOCKS += ppuClocks;
 
-
             step = false;
 
             cpu.mClock = 0;
             cpu.tClock = 0;
-
-        if (screen.processPolling) {
-            //Poll QT Events
         }
     }
 }
