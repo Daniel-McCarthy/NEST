@@ -1,12 +1,14 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "src/Canvas.h"
+#include "src/Core.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    core = new Core();
     canvas = new Canvas(this);
     canvas->move(0,21);
     canvas->resize(256, 240);
@@ -28,4 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete canvas;
+    delete core;
+    delete hLayout;
 }

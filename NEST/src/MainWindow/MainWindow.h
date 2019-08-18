@@ -9,6 +9,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class Core;
 class Canvas;
 class MainWindow : public QMainWindow
 {
@@ -20,6 +21,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    Core* core = nullptr;
     Canvas* canvas;
     QHBoxLayout* hLayout;
 };
