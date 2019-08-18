@@ -82,6 +82,8 @@ public:
     void pushStackU16(ushort value);
     uchar popStackU8();
     ushort popStackU16();
+    void setFlagTo(uchar flag, bool enable);
+    bool getFlagStatus(uchar flag);
     bool detectADCOverflow(int value, int addition, int sum);
     bool detectSBCOverflow(int value, int addition, int sum);
     uchar getAccumulator();

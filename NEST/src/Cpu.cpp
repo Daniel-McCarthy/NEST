@@ -139,6 +139,30 @@ bool Cpu::detectSBCOverflow(int value, int addition, int sum) {
     return ((((value ^ sum) & 0x80) > 0)) && (((value ^ addition) & 0x80) > 0);
 }
 
+
+/*
+ * @Name: setFlagTo
+ * @Params: byte flag: This contains the bits representing the flag to modify status with.
+ * @Params: bool enable: This tells whether to enable or disable this particular flag.
+ * @Purpose: Allows enabling and disabling specific flags in the CPU status register.
+ */
+void Cpu::setFlagTo(uchar flag, bool enable) {
+    if (enable) {
+        statusRegister |= flag;
+    } else {
+        statusRegister &= (uchar)(~flag);
+    }
+}
+
+/*
+ * @Name: getFlagStatus
+ * @Params: byte flag: This contains the bits to check in the status register.
+ * @Purpose: Allows checking if a specific flag bit is enabled or disabled in the status register.
+ */
+bool Cpu::getFlagStatus(uchar flag) {
+    return (statusRegister & flag) == flag;
+}
+
 uchar Cpu::getAccumulator() {
     return accumulator;
 }
