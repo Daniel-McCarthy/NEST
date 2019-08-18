@@ -215,6 +215,7 @@ private:
     void opcodeF4();
     void opcodeF5();
     void opcodeF6();
+    void opcodeF8();
     void opcodeF9();
     void opcodeFD();
     void opcodeFE();

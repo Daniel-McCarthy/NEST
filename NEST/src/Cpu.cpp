@@ -2398,6 +2398,17 @@ void Cpu::opcodeF6() {
     //6 cycles
 }
 
+void Cpu::opcodeF8() {
+    //SED: Set decimal flag to enabled
+
+    setFlagTo(Decimal_Mode_Flag, true);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcodeF9() {
     //SBC: Subtract Byte at (absolute + Y) address and Carry Flag value from Accumulator
 
