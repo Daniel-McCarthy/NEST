@@ -1848,6 +1848,32 @@ void Cpu::opcodeBE() {
    tClock += 4;
 }
 
+void Cpu::opcodeC0() {
+    //CPY: Compare value of Y register with Immediate byte
+
+    int value = yAddress;
+    value -= readImmediateByte();
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //2 Cycles. 1 cycle reading opcode byte and 1 cycle reading opcode argument byte.
+}
+
+void Cpu::opcodeC1() {
+    //Compare value of accumulator with value at indexedIndirect address
+
+    int value = accumulator;
+    value -= indexedIndirect(readImmediateByte());
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //6 Cycles. 1 cycle for opcode byte. 1 cycles for immediate byte. 1 cycle for getting xAddress. 3 for indexed Indirect addressing.
+}
+
 void Cpu::opcodeC2() {
     //Unofficial Opcode: NOP with immediate read
     programCounter++;
@@ -1856,6 +1882,32 @@ void Cpu::opcodeC2() {
     tClock += 4;
 
     // 2 cycles total. Read opcode byte, and operand byte.
+}
+
+void Cpu::opcodeC4() {
+    //CPY: Compare value of Y Register with value at Zero Page Address
+
+    int value = yAddress;
+    value -= readCPURam(readImmediateByte());
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //3 Cycles. 1 cycle reading opcode byte and 1 cycle reading opcode argument address byte, 1 cycle reading value from Zero Page.
+}
+
+void Cpu::opcodeC5() {
+    //Compare value of accumulator with value at Zero Page Address
+
+    int value = accumulator;
+    value -= readCPURam(readImmediateByte());
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //3 Cycles. 1 cycle reading opcode byte and 1 cycle reading opcode argument address byte, 1 cycle reading value from Zero Page.
 }
 
 void Cpu::opcodeC6() {
@@ -1876,6 +1928,19 @@ void Cpu::opcodeC6() {
 
 }
 
+void Cpu::opcodeC9() {
+    //Compare value of accumulator with Immediate byte
+
+    int value = accumulator;
+    value -= readImmediateByte();
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //2 Cycles. 1 cycle reading opcode byte and 1 cycle reading opcode argument byte.
+}
+
 void Cpu::opcodeCA() {
     //Decrement X Register
 
@@ -1888,6 +1953,32 @@ void Cpu::opcodeCA() {
     mClock += 1;
     tClock += 4;
 
+}
+
+void Cpu::opcodeCC() {
+    //CPY: Compare value of Y Register with value at absolute Address
+
+    int value = yAddress;
+    value -= absolute(readImmediateUShort());
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //4 Cycles. 1 cycle for opcode byte. 2 cycles for immediate ushort. 1 cycle for reading from Zero Page.
+}
+
+void Cpu::opcodeCD() {
+    //Compare value of accumulator with value at absolute Address
+
+    int value = accumulator;
+    value -= absolute(readImmediateUShort());
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //4 Cycles. 1 cycle for opcode byte. 2 cycles for immediate ushort. 1 cycle for reading from Zero Page.
 }
 
 void Cpu::opcodeCE() {
@@ -1929,6 +2020,19 @@ void Cpu::opcodeD0() {
     tClock += 4;
 }
 
+void Cpu::opcodeD1() {
+    //Compare value of accumulator with value at indirectIndexed address
+
+    int value = accumulator;
+    value -= indirectIndexed(readImmediateByte());
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //6 Cycles. 1 cycle for opcode byte. 1 cycles for immediate byte. 1 cycle for getting xAddress. 3 for indirect Indexed addressing.
+}
+
 void Cpu::opcodeD4() {
     //Unofficial Opcode: NOP with zero page + X read
     programCounter++;
@@ -1937,6 +2041,19 @@ void Cpu::opcodeD4() {
     tClock += 12;
 
     // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
+}
+
+void Cpu::opcodeD5() {
+   //Compare value of accumulator with value at Zero Page X Address
+
+   int value = accumulator;
+   value -= zeroPageIndexed(readImmediateByte(), xAddress);
+
+   setFlagTo(Carry_Flag, value >= 0);
+   setFlagTo(Zero_Flag, value == 0);
+   setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+   //4 Cycles. 1 cycle for opcode byte. 1 cycle for immediate byte. 1 cycle for getting xAddress. 1 cycle for reading from Zero Page.
 }
 
 void Cpu::opcodeD6() {
@@ -1969,6 +2086,32 @@ void Cpu::opcodeD8() {
     tClock += 4;
 }
 
+void Cpu::opcodeD9() {
+    //Compare value of accumulator with value at absolute + Y Address
+
+    int value = accumulator;
+    value -= absolute(readImmediateUShort(), yAddress);
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //5 Cycles. 1 cycle for opcode byte. 2 cycles for immediate ushort. 1 cycle for getting yAddress. 1 cycle for reading from Zero Page.
+}
+
+void Cpu::opcodeDD() {
+    //Compare value of accumulator with value at absolute + X Address
+
+    int value = accumulator;
+    value -= absolute(readImmediateUShort(), xAddress);
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //5 Cycles. 1 cycle for opcode byte. 2 cycles for immediate ushort. 1 cycle for getting xAddress. 1 cycle for reading from Zero Page.
+}
+
 void Cpu::opcodeDE() {
     //Decrement value at absolute + X address
 
@@ -1988,6 +2131,19 @@ void Cpu::opcodeDE() {
 
 }
 
+void Cpu::opcodeE0() {
+    //CPX: Compare value of X register with Immediate byte
+
+    int value = xAddress;
+    value -= readImmediateByte();
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //2 Cycles. 1 cycle reading opcode byte and 1 cycle reading opcode argument byte.
+}
+
 void Cpu::opcodeE2() {
     //Unofficial Opcode: NOP with immediate read
     programCounter++;
@@ -1996,6 +2152,32 @@ void Cpu::opcodeE2() {
     tClock += 4;
 
     // 2 cycles total. Read opcode byte, and operand byte.
+}
+
+void Cpu::opcodeE4() {
+    //CPX: Compare value of X Register with value at Zero Page Address
+
+    int value = xAddress;
+    value -= readCPURam(readImmediateByte());
+
+    setFlagTo(Carry_Flag, value >= 0);
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+    //3 Cycles. 1 cycle reading opcode byte and 1 cycle reading opcode argument address byte, 1 cycle reading value from Zero Page.
+}
+
+void Cpu::opcodeEC() {
+   //CPX: Compare value of X Register with value at absolute Address
+
+   int value = xAddress;
+   value -= absolute(readImmediateUShort());
+
+   setFlagTo(Carry_Flag, value >= 0);
+   setFlagTo(Zero_Flag, value == 0);
+   setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
+
+   //4 Cycles. 1 cycle for opcode byte. 2 cycles for immediate ushort. 1 cycle for reading from Zero Page.
 }
 
 void Cpu::opcodeEA() {
