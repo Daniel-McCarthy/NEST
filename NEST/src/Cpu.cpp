@@ -52,3 +52,7 @@ void Cpu::writeCPURam(ushort address, uchar value, bool ignoreCycles) {
         cpuRam[address] = value;
     }
 }
+
+void  Cpu::directCPURamWrite(ushort address, uchar value) {
+    cpuRam[address] = value;
+}
