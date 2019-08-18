@@ -30,7 +30,8 @@ SOURCES += \
     src/Core.cpp \
     src/Cpu.cpp \
     src/Input.cpp \
-    src/Binary.cpp
+    src/Binary.cpp \
+    src/Rom.cpp
 
 HEADERS += \
         src/MainWindow/MainWindow.h \
@@ -38,7 +39,8 @@ HEADERS += \
     src/Core.h \
     src/Cpu.h \
     src/Input.h \
-    src/Binary.h
+    src/Binary.h \
+    src/Rom.h
 
 FORMS += \
         src/MainWindow/MainWindow.ui

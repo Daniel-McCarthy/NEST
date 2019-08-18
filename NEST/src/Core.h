@@ -1,6 +1,7 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include "src/Rom.h"
 #include "src/Cpu.h"
 #include "src/Input.h"
 #include <QWidget>
@@ -11,6 +12,7 @@ class Core : public QObject
 public:
     explicit Core(QWidget *parent = 0);
     virtual ~Core();
+    Rom* getRomPointer();
     Cpu* getCPUPointer();
     Input* getInputPointer();
 
@@ -25,6 +27,7 @@ public:
     void emulationLoop();
 
 private:
+    Rom rom;
     Cpu cpu;
     Input input;
 

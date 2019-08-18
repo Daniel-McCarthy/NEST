@@ -3,12 +3,17 @@
 
 Core::Core(QWidget *parent)
     : QObject(parent),
+        rom(this),
         cpu(),
         input(this)
 {
 }
 
 Core::~Core() {
+}
+
+Rom* Core::getRomPointer() {
+    return &rom;
 }
 
 Cpu* Core::getCPUPointer() {
