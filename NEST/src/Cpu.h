@@ -82,11 +82,24 @@ private:
     void opcode39();
     void opcode3D();
     void opcode3E();
+    void opcode41();
+    void opcode45();
     void opcode46();
+    void opcode49();
+    void opcode4D();
     void opcode4A();
     void opcode4E();
+    void opcode51();
+    void opcode55();
     void opcode56();
+    void opcode59();
+    void opcode5D();
     void opcode5E();
+    void opcode66();
+    void opcode6A();
+    void opcode6E();
+    void opcode76();
+    void opcode7E();
 
 public:
     unsigned short programCounter = 0x8000;                                 //Tracks position in the program
