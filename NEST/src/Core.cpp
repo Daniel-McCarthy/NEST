@@ -13,8 +13,17 @@ Cpu* Core::getCPUPointer() {
     return &cpu;
 }
 
+void Core::setPaused(bool setting) {
+    paused = setting;
 }
 
+void Core::setRun(bool setting) {
+    run = setting;
+}
+
+void Core::setStep(bool setting) {
+    step = setting;
+}
 void Core::emulationLoop() {
     while(Core.run) {
         if (!paused || step) {
@@ -23,12 +32,9 @@ void Core::emulationLoop() {
 
             cpu.mClock = 0;
             cpu.tClock = 0;
-        }
 
         if (screen.processPolling) {
             //Poll QT Events
-            QCoreApplication::processEvents();
-            screen.processPolling = false;
         }
     }
 }
