@@ -65,6 +65,7 @@ public:
 	int returnTClock();
 	int returnMClock();
     unsigned char readCPURam(ushort address, bool ignoreCycles = false);
+    void writeCPURam(ushort address, uchar value, bool ignoreCycles = false);
 
 public slots:
 };
