@@ -6,6 +6,7 @@
 #define CPUH
 
 class Core;
+class Input;
 class Cpu : public QWidget
 {
     Q_OBJECT
@@ -50,13 +51,15 @@ private:
     // 0x4020-0xFFFF: Cartridge Space
     unsigned char cpuRam[0x10000];
 
+    Input& input;
+
 public:
     unsigned short programCounter = 0x8000;                                 //Tracks position in the program
     bool pendingInterrupt = false;
     uint tClock = 0;
     uint mClock = 0;
 
-    Cpu();
+    Cpu(Input& input);
     ~Cpu() {}
 
 	int returnTClock();

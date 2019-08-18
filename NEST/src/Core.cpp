@@ -4,7 +4,7 @@
 Core::Core(QWidget *parent)
     : QObject(parent),
         rom(this),
-        cpu(),
+        cpu(input),
         input(this)
 {
 }

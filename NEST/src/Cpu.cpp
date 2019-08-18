@@ -1,6 +1,9 @@
 #include "Core.h"
 #include "Cpu.h"
-Cpu::Cpu()
+#include "Binary.h"
+#include "Rom.h"
+Cpu::Cpu(Input& input)
+    : input(input)
 {
 }
 {
