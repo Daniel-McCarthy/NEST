@@ -596,6 +596,31 @@ void Cpu::opcode3E() {
     tClock += 8;
 }
 
+void Cpu::opcode41() {
+    //Bitwise XOR A Indexed Indirect X
+
+    uchar value = indexedIndirect(readCPURam(programCounter++));
+    accumulator = ((uchar)(accumulator ^ value));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode45() {
+    //Bitwise XOR A with Zero Page address
+
+    accumulator = ((uchar)(accumulator ^ zeroPageIndexed(readImmediateByte(),0)));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode46() {
     //Bitwise Right Shift of Zero Page Value
 
@@ -614,6 +639,18 @@ void Cpu::opcode46() {
     tClock += 8;
 }
 
+void Cpu::opcode49() {
+    //Bitwise XOR A with Immediate byte
+
+    accumulator = (uchar)(accumulator ^ readImmediateByte());
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode4A() {
     //Bitwise Right Shift of Accumulator
 
@@ -626,6 +663,18 @@ void Cpu::opcode4A() {
 
     mClock += 2;
     tClock += 8;
+}
+
+void Cpu::opcode4D() {
+    //Bitwise XOR A with absolute address
+
+    accumulator = (uchar)(accumulator ^ readCPURam(readImmediateUShort()));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
 }
 
 void Cpu::opcode4E() {
@@ -646,6 +695,31 @@ void Cpu::opcode4E() {
     tClock += 8;
 }
 
+void Cpu::opcode51() {
+    //Bitwise XOR A Indirect Indexed Y
+
+    uchar value = indirectIndexed(readCPURam(programCounter++));
+    accumulator = ((byte)(accumulator ^ value));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode55() {
+    //Bitwise XOR A with Zero Page X address
+
+    accumulator = ((uchar)(accumulator ^ zeroPageIndexed(readImmediateByte(), xAddress)));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode56() {
     //Bitwise Right Shift of value at Zero Page X address
 
@@ -662,6 +736,30 @@ void Cpu::opcode56() {
 
     mClock += 2;
     tClock += 8;
+}
+
+void Cpu::opcode59() {
+    //Bitwise XOR A with Absolute Y address
+
+    accumulator = (uchar)(accumulator ^ absolute(readImmediateUShort(), yAddress));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode5D() {
+    //Bitwise XOR A with Absolute X address
+
+    accumulator = (uchar)(accumulator ^ absolute(readImmediateUShort(), xAddress));
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 1;
+    tClock += 4;
 }
 
 void Cpu::opcode5E() {
