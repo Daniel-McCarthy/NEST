@@ -53,6 +53,8 @@ private:
 
     Input& input;
 
+    void opcode00();
+
 public:
     unsigned short programCounter = 0x8000;                                 //Tracks position in the program
     bool pendingInterrupt = false;

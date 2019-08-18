@@ -139,6 +139,21 @@ bool Cpu::detectSBCOverflow(int value, int addition, int sum) {
     return ((((value ^ sum) & 0x80) > 0)) && (((value ^ addition) & 0x80) > 0);
 }
 
+void Cpu::opcode00() {
+    //BRK: Force Interrupt
+
+    readImmediateByte(); // Empty padding byte.
+    setFlagTo(Breakpoint_Flag, true);
+    pushStackU16(programCounter);
+    pushStackU8(statusRegister);
+
+    ushort address = readCPURam(0xFFFE);
+    address |= (ushort)(readCPURam(0xFFFF) << 8);
+
+    programCounter = --address;
+
+    //7 Cycles
+}
 
 /*
  * @Name: setFlagTo
