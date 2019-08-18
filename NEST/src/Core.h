@@ -4,6 +4,7 @@
 #include "src/Rom.h"
 #include "src/Cpu.h"
 #include "src/Input.h"
+#include "src/Ppu.h"
 #include <QWidget>
 
 class Core : public QObject
@@ -15,6 +16,7 @@ public:
     Rom* getRomPointer();
     Cpu* getCPUPointer();
     Input* getInputPointer();
+    Ppu* getPpuPointer();
 
     bool run = false;
     bool paused = false;
@@ -29,6 +31,7 @@ public:
 private:
     Rom rom;
     Cpu cpu;
+    Ppu ppu;
     Input input;
 
 signals:

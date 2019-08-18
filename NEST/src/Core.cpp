@@ -5,7 +5,8 @@ Core::Core(QWidget *parent)
     : QObject(parent),
         rom(this),
         cpu(input),
-        input(this)
+        input(this),
+        ppu()
 {
 }
 
@@ -22,6 +23,10 @@ Cpu* Core::getCPUPointer() {
 
 Input* Core::getInputPointer() {
     return &input;
+}
+
+Ppu* Core::getPpuPointer() {
+    return &ppu;
 }
 
 void Core::setPaused(bool setting) {
