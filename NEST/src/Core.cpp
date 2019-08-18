@@ -25,8 +25,14 @@ void Core::setStep(bool setting) {
     step = setting;
 }
 void Core::emulationLoop() {
-    while(Core.run) {
+    while(run) {
         if (!paused || step) {
+            uint cpuClocks = cpu.mClock;
+            uint ppuClocks = cpuClocks * 3;
+
+            TOTAL_CPU_CLOCKS += cpuClocks;
+            TOTAL_PPU_CLOCKS += ppuClocks;
+
 
             step = false;
 
