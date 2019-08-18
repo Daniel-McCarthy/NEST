@@ -84,3 +84,27 @@ bool Cpu::detectADCOverflow(int value, int addition, int sum) {
 bool Cpu::detectSBCOverflow(int value, int addition, int sum) {
     return ((((value ^ sum) & 0x80) > 0)) && (((value ^ addition) & 0x80) > 0);
 }
+
+uchar Cpu::getAccumulator() {
+    return accumulator;
+}
+
+uchar Cpu::getStackPointer() {
+    return stackPointer;
+}
+
+uchar Cpu::getStatus() {
+    return statusRegister;
+}
+
+ushort Cpu::getProgramCounter() {
+    return programCounter;
+}
+
+uchar Cpu::getXRegister() {
+    return xAddress;
+}
+
+uchar Cpu::getYRegister() {
+    return yAddress;
+}

@@ -73,6 +73,12 @@ public:
     ushort popStackU16();
     bool detectADCOverflow(int value, int addition, int sum);
     bool detectSBCOverflow(int value, int addition, int sum);
+    uchar getAccumulator();
+    uchar getStackPointer();
+    uchar getStatus();
+    ushort getProgramCounter();
+    uchar getXRegister();
+    uchar getYRegister();
 
 public slots:
 };
