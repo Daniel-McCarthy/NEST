@@ -70,6 +70,14 @@ public:
     uchar readImmediateByte();
     ushort readImmediateUShort();
 
+    uchar zeroPageIndexed(uchar argument, uchar index, uchar offset = 0);
+    uchar absolute(ushort address, uchar offset = 0);
+    uchar absoluteIndexed(uchar argument, uchar index);
+    uchar indexedIndirect(uchar argument);
+    void writeIndexedIndirect(uchar address, uchar data);
+    uchar indirectIndexed(uchar argument);
+    void writeIndirectIndexed(uchar address, uchar data);
+
     void pushStackU8(uchar value);
     void pushStackU16(ushort value);
     uchar popStackU8();

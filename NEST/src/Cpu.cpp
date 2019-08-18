@@ -15,6 +15,52 @@ ushort Cpu::readImmediateUShort() {
     return (ushort)(readImmediateByte() | (readImmediateByte() << 8));
 }
 
+uchar Cpu::zeroPageIndexed(uchar argument, uchar index, uchar offset) {
+    //d, x  //d, y
+    return readCPURam((ushort)((argument + index + offset) % 256));
+}
+
+uchar Cpu::absolute(ushort address, uchar offset) {
+    return readCPURam((ushort)(address + offset));
+}
+
+uchar Cpu::absoluteIndexed(uchar argument, uchar index) {
+    //a, x //a, y
+    return readCPURam((ushort)(argument + index));
+}
+
+uchar Cpu::indexedIndirect(uchar argument) {
+    //(d, x)
+    ushort addressLower = readCPURam((ushort)((argument + xAddress) % 256));
+    ushort addressUpper = (ushort)(readCPURam((ushort)((argument + xAddress + 1) % 256)) << 8);
+    return readCPURam((ushort)(addressLower | addressUpper));
+
+    //May need extra logic for if argument is 0xFF, and the next byte would be at 00?
+}
+
+void Cpu::writeIndexedIndirect(uchar address, uchar data) {
+    //(d, x)
+    ushort addressLower = readCPURam((ushort)((address + xAddress) % 256));
+    ushort addressUpper = (ushort)(readCPURam((ushort)((address + xAddress + 1) % 256)) << 8);
+    writeCPURam((ushort)(addressLower | addressUpper), data);
+
+    //May need extra logic for if argument is 0xFF, and the next byte would be at 00?
+}
+
+
+uchar Cpu::indirectIndexed(uchar argument) {
+    //(d), y
+    ushort a = readCPURam(argument);
+    ushort b = (ushort)(zeroPageIndexed(argument, 0, 1) << 8);
+    return readCPURam((ushort)((a | b) + yAddress));
+}
+
+void Cpu::writeIndirectIndexed(uchar address, uchar data) {
+    ushort a = readCPURam(address);
+    ushort b = (ushort)(zeroPageIndexed(address, 0, 1) << 8);
+    writeCPURam((ushort)((a | b) + yAddress), data);
+}
+
 unsigned char Cpu::readCPURam(ushort address, bool ignoreCycles)
 {
     if(!ignoreCycles)
