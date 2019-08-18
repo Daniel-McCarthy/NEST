@@ -180,6 +180,24 @@ void Cpu::opcode05() {
     tClock += 4;
 }
 
+void Cpu::opcode06() {
+    //Bitwise Left Shift of Zero Page Value
+
+    ushort address = readImmediateByte();
+    uchar value = readCPURam(address);
+
+    setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
+
+    value <<= 1;
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
 void Cpu::opcode09() {
     //Bitwise OR A Immediate Byte
 
@@ -192,6 +210,20 @@ void Cpu::opcode09() {
     tClock += 4;
 }
 
+void Cpu::opcode0A() {
+    //Bitwise Left Shift of Accumulator
+
+    //Set carry flag to old bit 7
+    setFlagTo(Carry_Flag, (accumulator & 0x80) == 0x80);
+    accumulator <<= 1;
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
 void Cpu::opcode0D() {
     //Bitwise OR A Absolute 16 Bit Address
 
@@ -202,6 +234,24 @@ void Cpu::opcode0D() {
 
     mClock += 1;
     tClock += 4;
+}
+
+void Cpu::opcode0E() {
+    //Bitwise Left Shift of value at absolute address
+
+    ushort address = readImmediateUShort();
+    unsigned char value = readCPURam(address);
+
+    setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
+
+    value <<= 1;
+    writeCPURam(address, (unsigned char)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
 }
 
 void Cpu::opcode11() {
@@ -229,6 +279,24 @@ void Cpu::opcode15() {
     tClock += 4;
 }
 
+void Cpu::opcode16() {
+    //Bitwise Left Shift of value at Zero Page X address
+
+    ushort address = (ushort)(readImmediateByte() + xAddress);
+    uchar value = readCPURam(address);
+
+    setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
+
+    value <<= 1;
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
 void Cpu::opcode19() {
     //Bitwise OR A Absolute Y Index 16 Bit Address
 
@@ -251,6 +319,112 @@ void Cpu::opcode1D() {
 
     mClock += 1;
     tClock += 4;
+}
+
+void Cpu::opcode1E() {
+    //Bitwise Left Shift of value at absolute X address
+
+    ushort address = readImmediateUShort();
+    address += xAddress;
+    uchar value = readCPURam(address);
+
+    setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
+
+    value <<= 1;
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode46() {
+    //Bitwise Right Shift of Zero Page Value
+
+    ushort address = readImmediateByte();
+    uchar value = readCPURam(address);
+
+    setFlagTo(Carry_Flag, (value & 0x01) == 0x01);          //Set carry flag to old bit 7
+
+    value >>= 1;
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode4A() {
+    //Bitwise Right Shift of Accumulator
+
+    //Set carry flag to old bit 7
+    setFlagTo(Carry_Flag, (accumulator & 0x01) == 0x01);
+    accumulator >>= 1;
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode4E() {
+    //Bitwise Right Shift of value at absolute address
+
+    ushort address = readImmediateUShort();
+    uchar value = readCPURam(address);
+
+    setFlagTo(Carry_Flag, (value & 0x01) == 0x01);          //Set carry flag to old bit 7
+
+    value >>= 1;
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode56() {
+    //Bitwise Right Shift of value at Zero Page X address
+
+    ushort address = (ushort)(readImmediateByte() + xAddress);
+    uchar value = readCPURam(address);
+
+    setFlagTo(Carry_Flag, (value & 0x01) == 0x01);          //Set carry flag to old bit 7
+
+    value >>= 1;
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode5E() {
+    //Bitwise Right Shift of value at absolute X address
+
+    ushort address = readImmediateUShort();
+    address += xAddress;
+    uchar value = readCPURam(address);
+
+    setFlagTo(Carry_Flag, (value & 0x01) == 0x01);          //Set carry flag to old bit 7
+
+    value >>= 1;
+    writeCPURam(address, (uchar)(value));
+
+    setFlagTo(Zero_Flag, (value == 0));
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    mClock += 2;
+    tClock += 8;
 }
 
 /*
