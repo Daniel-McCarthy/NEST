@@ -10,9 +10,11 @@ struct Palette {
 };
 
 class Core;
+class Cpu;
 class Ppu
 {
 private:
+    Cpu& cpu;
 
 public:
     QImage screen = QImage(256, 240, QImage::Format_RGB32);
@@ -117,12 +119,14 @@ public:
     };
 
 
-    Ppu();
+    Ppu(Cpu& cpu);
     ~Ppu();
     unsigned char readPPURamByte(ushort address);
     void writePPURamByte(ushort address, unsigned char value);
     unsigned char readOAMRamByte(ushort address);
     void writeOAMRamByte(ushort address, unsigned char value);
+    unsigned char getPPUStatus();
+    unsigned char getPPURegister();
 
 };
 
