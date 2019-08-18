@@ -2,6 +2,7 @@
 #define CORE_H
 
 #include "src/Cpu.h"
+#include "src/Input.h"
 #include <QWidget>
 
 class Core : public QObject
@@ -11,6 +12,7 @@ public:
     explicit Core(QWidget *parent = 0);
     virtual ~Core();
     Cpu* getCPUPointer();
+    Input* getInputPointer();
 
     bool run = false;
     bool paused = false;
@@ -24,6 +26,7 @@ public:
 
 private:
     Cpu cpu;
+    Input input;
 
 signals:
 

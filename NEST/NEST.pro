@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui gamepad
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,13 +28,15 @@ SOURCES += \
         src/MainWindow/MainWindow.cpp \
     src/Canvas.cpp \
     src/Core.cpp \
-    src/Cpu.cpp
+    src/Cpu.cpp \
+    src/Input.cpp
 
 HEADERS += \
         src/MainWindow/MainWindow.h \
     src/Canvas.h \
     src/Core.h \
-    src/Cpu.h
+    src/Cpu.h \
+    src/Input.h
 
 FORMS += \
         src/MainWindow/MainWindow.ui

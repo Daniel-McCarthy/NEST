@@ -3,7 +3,8 @@
 
 Core::Core(QWidget *parent)
     : QObject(parent),
-        cpu()
+        cpu(),
+        input(this)
 {
 }
 
@@ -12,6 +13,10 @@ Core::~Core() {
 
 Cpu* Core::getCPUPointer() {
     return &cpu;
+}
+
+Input* Core::getInputPointer() {
+    return &input;
 }
 
 void Core::setPaused(bool setting) {
