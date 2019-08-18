@@ -81,7 +81,7 @@ void Input::gamepadButtonReleased(int id, QGamepadManager::GamepadButton button)
     }
 }
 
-void Input::joyPadRegisterWrite(uchar newValue, bool isJoyPad2 = false) {
+void Input::joyPadRegisterWrite(uchar newValue, bool isJoyPad2) {
     bool newStrobeValue = (newValue != 0);
 
     if(!isJoyPad2)
@@ -108,7 +108,7 @@ void Input::joyPadRegisterWrite(uchar newValue, bool isJoyPad2 = false) {
     }
 }
 
-uchar Input::joyPadRegisterRead(bool isJoyPad2 = false) {
+uchar Input::joyPadRegisterRead(bool isJoyPad2) {
     uchar status = 0;
 
     if (!isJoyPad2)

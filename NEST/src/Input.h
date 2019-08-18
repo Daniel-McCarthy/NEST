@@ -17,8 +17,6 @@ class Input : public QObject
 private:
     void gamepadButtonPressed(int id, QGamepadManager::GamepadButton button, double value);
     void gamepadButtonReleased(int id, QGamepadManager::GamepadButton button);
-    void joyPadRegisterWrite(uchar newValue, bool isJoyPad2);
-    uchar joyPadRegisterRead(bool isJoyPad2);
     void setJoy1KeyInput(int keyCode, bool enabled);
 
 public:
@@ -47,8 +45,11 @@ public:
     bool joy2KeySelect = false;
     bool joy2KeyA = false;
     bool joy2KeyB = false;
+
     unsigned char getKeyInput();
     void setKeyInput(int keyCode, bool enabled);
+    void joyPadRegisterWrite(uchar newValue, bool isJoyPad2 = false);
+    uchar joyPadRegisterRead(bool isJoyPad2 = false);
 
     Input(QObject *parent);
     ~Input();
