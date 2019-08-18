@@ -666,6 +666,17 @@ void Cpu::opcode36() {
     tClock += 8;
 }
 
+void Cpu::opcode38() {
+    //SEC: Set carry flag to enabled
+
+    setFlagTo(Carry_Flag, true);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode39() {
     //Bitwise And A with Absolute + Y Address
 
@@ -1140,6 +1151,17 @@ void Cpu::opcode76() {
 
     mClock += 2;
     tClock += 8;
+}
+
+void Cpu::opcode78() {
+    //SEI: Set interrupt disable flag to enabled
+
+    setFlagTo(Interrupt_Disable_Flag, true);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
 }
 
 void Cpu::opcode7E() {
