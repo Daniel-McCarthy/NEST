@@ -79,6 +79,7 @@ public:
     ushort getProgramCounter();
     uchar getXRegister();
     uchar getYRegister();
+    void setStackPointer(uchar newSP);
 
 public slots:
 };

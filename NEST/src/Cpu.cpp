@@ -108,3 +108,8 @@ uchar Cpu::getXRegister() {
 uchar Cpu::getYRegister() {
     return yAddress;
 }
+
+void Cpu::setStackPointer(uchar newSP)
+{
+    stackPointer = newSP;
+}
