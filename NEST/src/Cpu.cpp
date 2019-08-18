@@ -1398,6 +1398,20 @@ void Cpu::opcode86() {
     //3 Cycles
 }
 
+void Cpu::opcode88() {
+    //Decrement Y Register
+
+    --yAddress;
+
+    setFlagTo(Zero_Flag, yAddress == 0);
+    setFlagTo(Negative_Flag, (yAddress & 0x80) != 0);
+
+    //2 Cycles
+    mClock += 1;
+    tClock += 4;
+
+}
+
 void Cpu::opcode89() {
     //Unofficial Opcode: NOP with immediate read
     programCounter++;
@@ -1652,6 +1666,56 @@ void Cpu::opcodeC2() {
     // 2 cycles total. Read opcode byte, and operand byte.
 }
 
+void Cpu::opcodeC6() {
+    //Decrement value at Zero Page address
+
+    uchar address = readImmediateByte();
+    uchar value = readCPURam(address);
+    --value;
+
+    writeCPURam(address, value);
+
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    //5 Cycles
+    mClock += 1;
+    tClock += 4;
+
+}
+
+void Cpu::opcodeCA() {
+    //Decrement X Register
+
+    --xAddress;
+
+    setFlagTo(Zero_Flag, xAddress == 0);
+    setFlagTo(Negative_Flag, (xAddress & 0x80) != 0);
+
+    //2 Cycles
+    mClock += 1;
+    tClock += 4;
+
+}
+
+void Cpu::opcodeCE() {
+    //Decrement value at absolute address
+
+    ushort address = readImmediateUShort();
+    uchar value = readCPURam(address);
+    --value;
+
+    writeCPURam(address, value);
+
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    //6 Cycles
+    mClock += 1;
+    tClock += 4;
+
+}
+
 void Cpu::opcodeD0() {
     //BNE: Branch if Zero Flag disabled
 
@@ -1683,6 +1747,25 @@ void Cpu::opcodeD4() {
     // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
 }
 
+void Cpu::opcodeD6() {
+    //Decrement value at Zero Page + X address
+
+    uchar address = readImmediateByte();
+    address += xAddress;
+    uchar value = readCPURam(address);
+    --value;
+
+    writeCPURam(address, value);
+
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    //6 Cycles
+    mClock += 2;
+    tClock += 8;
+
+}
+
 void Cpu::opcodeD8() {
     //CLD: Set decimal flag to disabled
 
@@ -1692,6 +1775,25 @@ void Cpu::opcodeD8() {
 
     mClock += 1;
     tClock += 4;
+}
+
+void Cpu::opcodeDE() {
+    //Decrement value at absolute + X address
+
+    ushort address = readImmediateUShort();
+    address += xAddress;
+    unsigned char value = readCPURam(address);
+    --value;
+
+    writeCPURam(address, value);
+
+    setFlagTo(Zero_Flag, value == 0);
+    setFlagTo(Negative_Flag, (value & 0x80) != 0);
+
+    //7 Cycles
+    mClock += 2;
+    tClock += 8;
+
 }
 
 void Cpu::opcodeE2() {

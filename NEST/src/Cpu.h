@@ -139,6 +139,7 @@ private:
     void opcode84();
     void opcode85();
     void opcode86();
+    void opcode88();
     void opcode89();
     void opcode8A();
     void opcode8C();
@@ -159,9 +160,14 @@ private:
     void opcodeB8();
     void opcodeBA();
     void opcodeC2();
+    void opcodeC6();
+    void opcodeCA();
+    void opcodeCE();
     void opcodeD0();
     void opcodeD4();
+    void opcodeD6();
     void opcodeD8();
+    void opcodeDE();
     void opcodeE2();
     void opcodeEA();
     void opcodeF0();
