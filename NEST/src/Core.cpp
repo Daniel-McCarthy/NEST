@@ -9,7 +9,7 @@ Core::Core(QWidget *parent)
 Core::~Core() {
 }
 
-void Core::startEmulator() {
+void Core::emulationLoop() {
     while(Core.run) {
         if (!paused || step) {
 
