@@ -1353,6 +1353,17 @@ void Cpu::opcode80() {
     // 2 cycles total. Read opcode byte, and operand byte.
 }
 
+void Cpu::opcode81() {
+    //STA: Copy value in accumulator to Indexed Indirect Address
+
+    writeIndexedIndirect(readImmediateByte(), accumulator);
+
+    //6 cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcode82() {
     //Unofficial Opcode: NOP with immediate read
     programCounter++;
@@ -1363,6 +1374,30 @@ void Cpu::opcode82() {
     // 2 cycles total. Read opcode byte, and operand byte.
 }
 
+void Cpu::opcode84() {
+    //STY: Copy value in y register to zero page addres
+
+    writeCPURam(readImmediateByte(), yAddress);
+
+    //3 Cycles
+}
+
+void Cpu::opcode85() {
+    //STA: Copy value in accumulator to Zero Page Address
+
+    writeCPURam(readImmediateByte(), accumulator);
+
+    //3 cycles
+}
+
+void Cpu::opcode86() {
+    //STX: Copy value in x register to zero page addres
+
+    writeCPURam(readImmediateByte(), xAddress);
+
+    //3 Cycles
+}
+
 void Cpu::opcode89() {
     //Unofficial Opcode: NOP with immediate read
     programCounter++;
@@ -1371,6 +1406,44 @@ void Cpu::opcode89() {
     tClock += 4;
 
     // 2 cycles total. Read opcode byte, and operand byte.
+}
+
+void Cpu::opcode8A() {
+    //TXA: Copy value in x register to accumulator
+
+    accumulator = xAddress;
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode8C() {
+    //STY: Copy value in y register to absolute address
+
+    writeCPURam(readImmediateUShort(), yAddress);
+
+    //4 Cycles
+}
+
+void Cpu::opcode8D() {
+    //STA: Copy value in accumulator to Absolute Address
+
+    writeCPURam(readImmediateUShort(), accumulator);
+
+    //4 cycles
+}
+
+void Cpu::opcode8E() {
+    //STX: Copy value in x register to absolute address
+
+    writeCPURam(readImmediateUShort(), xAddress);
+
+    //4 Cycles
 }
 
 void Cpu::opcode90() {
@@ -1389,6 +1462,135 @@ void Cpu::opcode90() {
 
     //TODO: Add Cycle if branched to a new page
     //2 cycles. +1 cycle if branch successful. +2 cycles if branched to a new page.
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode91() {
+    //STA: Copy value in accumulator to Indirect Indexed Address
+
+    writeIndirectIndexed(readImmediateByte(), accumulator);
+
+    //6 cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode94() {
+    //STY: Copy value in y register to zero page + x address
+
+    unsigned char address = readImmediateByte();
+    address += xAddress;
+    writeCPURam(address, yAddress);
+
+    //4 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode95() {
+    //STA: Copy value in accumulator to Zero Page + X Address
+
+    ushort address = readImmediateByte();
+    address += xAddress;
+    writeCPURam(address, accumulator);
+
+    //4 cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode96() {
+    //STX: Copy value in x register to zero page + y address
+
+    unsigned char address = readImmediateByte();
+    address += yAddress;
+    writeCPURam(address, xAddress);
+
+    //4 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode98() {
+    //TYA: Copy value in y register to accumulator
+
+    accumulator = yAddress;
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode99() {
+    //STA: Copy value in accumulator to Absolute + Y Address
+
+    ushort address = readImmediateUShort();
+    address += yAddress;
+    writeCPURam(address, accumulator);
+
+    //5 cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode9A() {
+    //TXS: Copy value in x register to stack pointer
+
+    stackPointer = xAddress;
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcode9D() {
+    //STA: Copy value in accumulator to Absolute + X Address
+
+    ushort address = readImmediateUShort();
+    address += xAddress;
+    writeCPURam(address, accumulator);
+
+    //5 cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcodeA8() {
+    //TAY: Copy value in accumulator to Y Register
+
+    yAddress = accumulator;
+
+    setFlagTo(Zero_Flag, (yAddress == 0));
+    setFlagTo(Negative_Flag, (yAddress & 0x80) != 0);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcodeAA() {
+    //TAX: Copy value in accumulator to X Register
+
+    xAddress = accumulator;
+
+    setFlagTo(Zero_Flag, (xAddress == 0));
+    setFlagTo(Negative_Flag, (xAddress & 0x80) != 0);
+
+    //2 Cycles
 
     mClock += 1;
     tClock += 4;
@@ -1419,6 +1621,20 @@ void Cpu::opcodeB8() {
     //CLV: Set overflow flag to disabled
 
     setFlagTo(Overflow_Flag, false);
+
+    //2 Cycles
+
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcodeBA() {
+    //TSX: Copy value in stack pointer to X Register
+
+    xAddress = stackPointer;
+
+    setFlagTo(Zero_Flag, (xAddress == 0));
+    setFlagTo(Negative_Flag, (xAddress & 0x80) != 0);
 
     //2 Cycles
 
