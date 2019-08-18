@@ -199,16 +199,24 @@ private:
     void opcodeDD();
     void opcodeDE();
     void opcodeE0();
+    void opcodeE1();
     void opcodeE2();
     void opcodeE4();
+    void opcodeE5();
     void opcodeE6();
     void opcodeE8();
+    void opcodeE9();
     void opcodeEA();
     void opcodeEC();
+    void opcodeED();
     void opcodeEE();
     void opcodeF0();
+    void opcodeF1();
     void opcodeF4();
+    void opcodeF5();
     void opcodeF6();
+    void opcodeF9();
+    void opcodeFD();
     void opcodeFE();
 
 public:

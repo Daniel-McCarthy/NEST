@@ -2158,6 +2158,22 @@ void Cpu::opcodeE0() {
     //2 Cycles. 1 cycle reading opcode byte and 1 cycle reading opcode argument byte.
 }
 
+void Cpu::opcodeE1() {
+    //SBC: Subtract Byte at Indexed Indirect address and Carry Flag value from Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = indexedIndirect(readImmediateByte());
+    int carryAmount = getFlagStatus(Carry_Flag) ? 0 : 1;
+    int sum = originalValue - additionByte - carryAmount;
+
+    accumulator = (uchar)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectSBCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, (originalValue >= (additionByte + carryAmount)));
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
+}
+
 void Cpu::opcodeE2() {
     //Unofficial Opcode: NOP with immediate read
     programCounter++;
@@ -2179,6 +2195,22 @@ void Cpu::opcodeE4() {
     setFlagTo(Negative_Flag, (value & 0x80) == 0x80);
 
     //3 Cycles. 1 cycle reading opcode byte and 1 cycle reading opcode argument address byte, 1 cycle reading value from Zero Page.
+}
+
+void Cpu::opcodeE5() {
+    //SBC: Subtract Zero Page Byte + Carry Flag value from Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = readCPURam(readImmediateByte());
+    int carryAmount = getFlagStatus(Carry_Flag) ? 0 : 1;
+    int sum = originalValue - additionByte - carryAmount;
+
+    accumulator = (uchar)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectSBCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, (originalValue >= (additionByte + carryAmount)));
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
 }
 
 void Cpu::opcodeE6() {
@@ -2212,6 +2244,22 @@ void Cpu::opcodeEC() {
    //4 Cycles. 1 cycle for opcode byte. 2 cycles for immediate ushort. 1 cycle for reading from Zero Page.
 }
 
+void Cpu::opcodeED() {
+    //SBC: Subtract Byte at absolute address and Carry Flag value from Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = readCPURam(readImmediateUShort());
+    int carryAmount = getFlagStatus(Carry_Flag) ? 0 : 1;
+    int sum = originalValue - additionByte - carryAmount;
+
+    accumulator = (uchar)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectSBCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, (originalValue >= (additionByte + carryAmount)));
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
+}
+
 void Cpu::opcodeE8() {
     //Increment data at Zero page address
 
@@ -2224,6 +2272,22 @@ void Cpu::opcodeE8() {
     tClock += 4;
 
     //2 cycles
+}
+
+void Cpu::opcodeE9() {
+    //SBC: Subtract Immedate byte and Carry Flag value from A
+
+    int originalValue = accumulator;
+    int additionByte = readImmediateByte();
+    int carryAmount = getFlagStatus(Carry_Flag) ? 0 : 1;
+    int sum = originalValue - additionByte - carryAmount;
+
+    accumulator = (uchar)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectSBCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, (originalValue >= (additionByte + carryAmount)));
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
 }
 
 void Cpu::opcodeEA() {
@@ -2274,6 +2338,22 @@ void Cpu::opcodeF0() {
     tClock += 4;
 }
 
+void Cpu::opcodeF1() {
+    //SBC: Subtract Byte at Indirect Indexed address and Carry Flag value from Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = indirectIndexed(readImmediateByte());
+    int carryAmount = getFlagStatus(Carry_Flag) ? 0 : 1;
+    int sum = originalValue - additionByte - carryAmount;
+
+    accumulator = (uchar)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectSBCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, (originalValue >= (additionByte + carryAmount)));
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
+}
+
 void Cpu::opcodeF4() {
     //Unofficial Opcode: NOP with zero page + X read
     programCounter++;
@@ -2284,6 +2364,21 @@ void Cpu::opcodeF4() {
     // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
 }
 
+void Cpu::opcodeF5() {
+    //SBC: Subtract (Zero Page + X Byte) address value and Carry Flag value from Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = zeroPageIndexed(readImmediateByte(), xAddress);
+    int carryAmount = getFlagStatus(Carry_Flag) ? 0 : 1;
+    int sum = originalValue - additionByte - carryAmount;
+
+    accumulator = (uchar)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectSBCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, (originalValue >= (additionByte + carryAmount)));
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
+}
 void Cpu::opcodeF6() {
     //Increment data at Zero page + X address
 
@@ -2301,6 +2396,42 @@ void Cpu::opcodeF6() {
     tClock += 12;
 
     //6 cycles
+}
+
+void Cpu::opcodeF9() {
+    //SBC: Subtract Byte at (absolute + Y) address and Carry Flag value from Accumulator
+
+    int originalValue = accumulator;
+    ushort address = readImmediateUShort();
+    address += yAddress;
+    int additionByte = readCPURam(address);
+    int carryAmount = getFlagStatus(Carry_Flag) ? 0 : 1;
+    int sum = originalValue - additionByte - carryAmount;
+
+    accumulator = (uchar)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectSBCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, (originalValue >= (additionByte + carryAmount)));
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
+}
+
+void Cpu::opcodeFD() {
+    //SBC: Subtract Byte at (absolute + X) address and Carry Flag value from Accumulator
+
+    int originalValue = accumulator;
+    ushort address = readImmediateUShort();
+    address += xAddress;
+    int additionByte = readCPURam(address);
+    int carryAmount = getFlagStatus(Carry_Flag) ? 0 : 1;
+    int sum = originalValue - additionByte - carryAmount;
+
+    accumulator = (uchar)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectSBCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, (originalValue >= (additionByte + carryAmount)));
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
 }
 
 void Cpu::opcodeFE() {
