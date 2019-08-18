@@ -728,6 +728,18 @@ void Cpu::opcode3E() {
     tClock += 8;
 }
 
+void Cpu::opcode40() {
+    //RTI: Return from interrupt
+
+    statusRegister = popStackU8();
+    statusRegister |= Empty_Flag;
+    programCounter = (ushort)(popStackU16());
+
+    //6 cycles
+    mClock += 2;
+    tClock += 8;
+}
+
 void Cpu::opcode41() {
     //Bitwise XOR A Indexed Indirect X
 
@@ -977,6 +989,16 @@ void Cpu::opcode5E() {
     setFlagTo(Zero_Flag, (value == 0));
     setFlagTo(Negative_Flag, (value & 0x80) != 0);
 
+    mClock += 2;
+    tClock += 8;
+}
+
+void Cpu::opcode60() {
+    //Return from subroutine
+
+    programCounter = (ushort)(popStackU16() + 1);
+
+    //6 cycles
     mClock += 2;
     tClock += 8;
 }
