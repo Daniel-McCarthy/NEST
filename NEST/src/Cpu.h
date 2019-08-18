@@ -71,6 +71,8 @@ public:
     void pushStackU16(ushort value);
     uchar popStackU8();
     ushort popStackU16();
+    bool detectADCOverflow(int value, int addition, int sum);
+    bool detectSBCOverflow(int value, int addition, int sum);
 
 public slots:
 };

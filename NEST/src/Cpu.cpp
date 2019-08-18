@@ -76,3 +76,11 @@ uchar Cpu::popStackU8()
 ushort Cpu::popStackU16() {
     return (ushort)(popStackU8() | (popStackU8() << 8));
 }
+
+bool Cpu::detectADCOverflow(int value, int addition, int sum) {
+    return (!(((value ^ addition) & 0x80) > 0)) && (((value ^ sum) & 0x80) > 0);
+}
+
+bool Cpu::detectSBCOverflow(int value, int addition, int sum) {
+    return ((((value ^ sum) & 0x80) > 0)) && (((value ^ addition) & 0x80) > 0);
+}
