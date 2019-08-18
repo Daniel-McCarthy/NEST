@@ -7,6 +7,14 @@ Cpu::Cpu(Input& input)
 {
 }
 
+uchar Cpu::readImmediateByte() {
+    return readCPURam(programCounter++);
+}
+
+ushort Cpu::readImmediateUShort() {
+    return (ushort)(readImmediateByte() | (readImmediateByte() << 8));
+}
+
 unsigned char Cpu::readCPURam(ushort address, bool ignoreCycles)
 {
     if(!ignoreCycles)
