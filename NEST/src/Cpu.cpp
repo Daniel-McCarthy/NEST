@@ -1582,6 +1582,61 @@ void Cpu::opcode9D() {
     tClock += 4;
 }
 
+void Cpu::opcodeA0() {
+    //Load immediate byte into Y Register
+
+    yAddress = readImmediateByte();
+
+    setFlagTo(Zero_Flag, (yAddress == 0));
+    setFlagTo(Negative_Flag, (yAddress & 0x80) != 0);
+}
+
+void Cpu::opcodeA1() {
+    //Load value at indexedIndirect address into accumulator
+
+    accumulator = indexedIndirect(readImmediateByte());
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+}
+
+void Cpu::opcodeA2() {
+    //Load immediate byte into X Register
+
+    xAddress = readImmediateByte();
+
+    setFlagTo(Zero_Flag, (xAddress == 0));
+    setFlagTo(Negative_Flag, (xAddress & 0x80) != 0);
+}
+
+void Cpu::opcodeA4() {
+    //Load zero page value into Y Register
+
+    yAddress = readCPURam(readImmediateByte());
+
+    setFlagTo(Zero_Flag, (yAddress == 0));
+    setFlagTo(Negative_Flag, (yAddress & 0x80) != 0);
+}
+
+void Cpu::opcodeA5() {
+    //Load zero page value into accumulator
+
+    accumulator = readCPURam(readImmediateByte());
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+}
+
+void Cpu::opcodeA6() {
+    //Load zero page value into X Register
+
+    xAddress = readCPURam(readImmediateByte());
+
+    setFlagTo(Zero_Flag, (xAddress == 0));
+    setFlagTo(Negative_Flag, (xAddress & 0x80) != 0);
+}
+
 void Cpu::opcodeA8() {
     //TAY: Copy value in accumulator to Y Register
 
@@ -1596,6 +1651,15 @@ void Cpu::opcodeA8() {
     tClock += 4;
 }
 
+void Cpu::opcodeA9() {
+    //Load immediate byte into accumulator
+
+    accumulator = readImmediateByte();
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+}
+
 void Cpu::opcodeAA() {
     //TAX: Copy value in accumulator to X Register
 
@@ -1608,6 +1672,33 @@ void Cpu::opcodeAA() {
 
     mClock += 1;
     tClock += 4;
+}
+
+void Cpu::opcodeAC() {
+    //Load value at absolute address into Y Register
+
+    yAddress = absolute(readImmediateUShort());
+
+    setFlagTo(Zero_Flag, (yAddress == 0));
+    setFlagTo(Negative_Flag, (yAddress & 0x80) != 0);
+}
+
+void Cpu::opcodeAD() {
+    //Load value at absolute address into accumulator
+
+    accumulator = absolute(readImmediateUShort());
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+}
+
+void Cpu::opcodeAE() {
+    //Load value at absolute address into X Register
+
+    xAddress = absolute(readImmediateUShort());
+
+    setFlagTo(Zero_Flag, (xAddress == 0));
+    setFlagTo(Negative_Flag, (xAddress & 0x80) != 0);
 }
 
 void Cpu::opcodeB0() {
@@ -1631,6 +1722,55 @@ void Cpu::opcodeB0() {
     tClock += 4;
 }
 
+void Cpu::opcodeB1() {
+    //Load value at indirectIndexed address into accumulator
+
+    accumulator = indirectIndexed(readImmediateByte());
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+}
+
+void Cpu::opcodeB4() {
+    //Load zero page + x value into Y Register
+
+    yAddress = zeroPageIndexed(readImmediateByte(), xAddress);
+
+    setFlagTo(Zero_Flag, (yAddress == 0));
+    setFlagTo(Negative_Flag, (yAddress & 0x80) != 0);
+
+    //Add cycle to account for retrieving X address
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcodeB5() {
+    //Load zero page + x value into accumulator
+
+    accumulator = zeroPageIndexed(readImmediateByte(), xAddress);
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    //Add cycle to account for retrieving X address
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcodeB6() {
+    //Load zero page + y value into X Register
+
+    xAddress = zeroPageIndexed(readImmediateByte(), yAddress);
+
+    setFlagTo(Zero_Flag, (xAddress == 0));
+    setFlagTo(Negative_Flag, (xAddress & 0x80) != 0);
+
+    //Add cycle to account for retrieving X address
+    mClock += 1;
+    tClock += 4;
+}
+
 void Cpu::opcodeB8() {
     //CLV: Set overflow flag to disabled
 
@@ -1638,6 +1778,19 @@ void Cpu::opcodeB8() {
 
     //2 Cycles
 
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcodeB9() {
+    //Load value at absolute + Y address into accumulator
+
+    accumulator = absolute(readImmediateUShort(), yAddress);
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    //Add cycle to account for retrieving y address
     mClock += 1;
     tClock += 4;
 }
@@ -1654,6 +1807,45 @@ void Cpu::opcodeBA() {
 
     mClock += 1;
     tClock += 4;
+}
+
+void Cpu::opcodeBC() {
+    //Load value at absolute + X address into Y Register
+
+    yAddress = absolute(readImmediateUShort(), xAddress);
+
+    setFlagTo(Zero_Flag, (yAddress == 0));
+    setFlagTo(Negative_Flag, (yAddress & 0x80) != 0);
+
+    //Add cycle to account for retrieving X address
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcodeBD() {
+    //Load value at absolute + X address into accumulator
+
+    accumulator = absolute(readImmediateUShort(), xAddress);
+
+    setFlagTo(Zero_Flag, (accumulator == 0));
+    setFlagTo(Negative_Flag, (accumulator & 0x80) != 0);
+
+    //Add cycle to account for retrieving X address
+    mClock += 1;
+    tClock += 4;
+}
+
+void Cpu::opcodeBE() {
+   //Load value at absolute + Y address into X Register
+
+   xAddress = absolute(readImmediateUShort(), yAddress);
+
+   setFlagTo(Zero_Flag, (xAddress == 0));
+   setFlagTo(Negative_Flag, (xAddress & 0x80) != 0);
+
+   //Add cycle to account for retrieving y address
+   mClock += 1;
+   tClock += 4;
 }
 
 void Cpu::opcodeC2() {
