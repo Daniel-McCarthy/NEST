@@ -1003,11 +1003,43 @@ void Cpu::opcode60() {
     tClock += 8;
 }
 
+void Cpu::opcode61() {
+    //ADC: Add Byte at Indexed Indirect address + Carry Flag and copy it to Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = indexedIndirect(readImmediateByte());
+    int carryAmount = getFlagStatus(Carry_Flag) ? 1 : 0;
+    int sum = originalValue + additionByte + carryAmount;
+
+    accumulator = (unsigned char)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectADCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, sum > 0xFF);
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
+}
+
 void Cpu::opcode64() {
     //Unofficial Opcode: NOP with zero page read
     readCPURam(readImmediateByte());
 
     // 3 cycles total. Read opcode byte, operand byte, and read value from address.
+}
+
+void Cpu::opcode65() {
+    //ADC: Add Zero Page Byte + Carry Flag and copy it to Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = readCPURam(readImmediateByte());
+    int carryAmount = getFlagStatus(Carry_Flag) ? 1 : 0;
+    int sum = originalValue + additionByte + carryAmount;
+
+    accumulator = (unsigned char)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectADCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, sum > 0xFF);
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
 }
 
 void Cpu::opcode66() {
@@ -1047,6 +1079,22 @@ void Cpu::opcode68() {
 
     mClock += 2;
     tClock += 8;
+}
+
+void Cpu::opcode69() {
+    //ADC: Add Immediate Byte + Carry Flag and copy it to Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = readImmediateByte();
+    int carryAmount = getFlagStatus(Carry_Flag) ? 1 : 0;
+    int sum = originalValue + additionByte + carryAmount;
+
+    accumulator = (unsigned char)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectADCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, sum > 0xFF);
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
 }
 
 void Cpu::opcode6A() {
@@ -1092,6 +1140,22 @@ void Cpu::opcode6C() {
     programCounter = address;
 
     //3 cycles
+}
+
+void Cpu::opcode6D() {
+    //ADC: Add Byte at absolute address + Carry Flag and copy it to Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = readCPURam(readImmediateUShort());
+    int carryAmount = getFlagStatus(Carry_Flag) ? 1 : 0;
+    int sum = originalValue + additionByte + carryAmount;
+
+    accumulator = (unsigned char)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectADCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, sum > 0xFF);
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
 }
 
 void Cpu::opcode6E() {
@@ -1140,6 +1204,22 @@ void Cpu::opcode70() {
     tClock += 4;
 }
 
+void Cpu::opcode71() {
+    //ADC: Add Byte at Indirect Indexed address + Carry Flag and copy it to Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = indirectIndexed(readImmediateByte());
+    int carryAmount = getFlagStatus(Carry_Flag) ? 1 : 0;
+    int sum = originalValue + additionByte + carryAmount;
+
+    accumulator = (unsigned char)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectADCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, sum > 0xFF);
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
+}
+
 void Cpu::opcode74() {
     //Unofficial Opcode: NOP with zero page + X read
     programCounter++;
@@ -1148,6 +1228,22 @@ void Cpu::opcode74() {
     tClock += 12;
 
     // 4 cycles total. Read opcode byte, operand byte, and read value from address, and index of X address.
+}
+
+void Cpu::opcode75() {
+    //ADC: Add Zero Page + X Byte + Carry Flag and copy it to Accumulator
+
+    int originalValue = accumulator;
+    int additionByte = zeroPageIndexed(readImmediateByte(), xAddress);
+    int carryAmount = getFlagStatus(Carry_Flag) ? 1 : 0;
+    int sum = originalValue + additionByte + carryAmount;
+
+    accumulator = (unsigned char)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectADCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, sum > 0xFF);
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
 }
 
 void Cpu::opcode76() {
@@ -1184,6 +1280,42 @@ void Cpu::opcode78() {
 
     mClock += 1;
     tClock += 4;
+}
+
+void Cpu::opcode79() {
+    //ADC: Add Byte at absolute + Y address + Carry Flag and copy it to Accumulator
+
+    int originalValue = accumulator;
+    ushort address = readImmediateUShort();
+    address += yAddress;
+    int additionByte = readCPURam(address);
+    int carryAmount = getFlagStatus(Carry_Flag) ? 1 : 0;
+    int sum = originalValue + additionByte + carryAmount;
+
+    accumulator = (unsigned char)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectADCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, sum > 0xFF);
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
+}
+
+void Cpu::opcode7D() {
+    //ADC: Add Byte at absolute + X address + Carry Flag and copy it to Accumulator
+
+    int originalValue = accumulator;
+    ushort address = readImmediateUShort();
+    address += xAddress;
+    int additionByte = readCPURam(address);
+    int carryAmount = getFlagStatus(Carry_Flag) ? 1 : 0;
+    int sum = originalValue + additionByte + carryAmount;
+
+    accumulator = (unsigned char)(sum & 0xFF);
+
+    setFlagTo(Overflow_Flag, detectADCOverflow(originalValue, additionByte, sum));
+    setFlagTo(Carry_Flag, sum > 0xFF);
+    setFlagTo(Zero_Flag, accumulator == 0);
+    setFlagTo(Negative_Flag, (accumulator & 0x80) == 0x80);
 }
 
 void Cpu::opcode7E() {
