@@ -52,6 +52,3 @@ void Cpu::writeCPURam(ushort address, uchar value, bool ignoreCycles) {
         cpuRam[address] = value;
     }
 }
-{
-}
-
