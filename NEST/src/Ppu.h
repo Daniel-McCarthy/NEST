@@ -119,6 +119,8 @@ public:
 
     Ppu();
     ~Ppu();
+    unsigned char readPPURamByte(ushort address);
+    void writePPURamByte(ushort address, unsigned char value);
 
 };
 
