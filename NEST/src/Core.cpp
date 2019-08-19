@@ -54,6 +54,8 @@ void Core::emulationLoop() {
             TOTAL_CPU_CLOCKS += cpuClocks;
             TOTAL_PPU_CLOCKS += ppuClocks;
 
+            ppu.updatePPU(TOTAL_PPU_CLOCKS);
+
             step = false;
 
             cpu.mClock = 0;
