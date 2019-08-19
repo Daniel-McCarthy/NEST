@@ -127,6 +127,21 @@ public:
     void writeOAMRamByte(ushort address, unsigned char value);
     unsigned char getPPUStatus();
     unsigned char getPPURegister();
+    unsigned char getPPURegisterNameTableSetting();
+    unsigned char getPPURegisterVRAMIncrement();
+    bool getPPURegisterSpritePatternTableSetting();
+    bool getPPURegisterBackgroundPatternTableSetting();
+    bool getPPURegisterSpriteSizeSetting();
+    bool getPPURegisterNMISetting();
+    unsigned char getPPUMask();
+    bool getMaskGreyscaleEnabled();
+    bool getMaskLeft8BGPixelsEnabled();
+    bool getMaskLeft8SpritesPixelsEnabled();
+    bool getMaskBackgroundEnabled();
+    bool getMaskSpriteEnabled();
+    bool getMaskEmphasizeRedEnabled();
+    bool getMaskEmphasizeGreenEnabled();
+    bool getMaskEmphasizeBlueEnabled();
 
 };
 
