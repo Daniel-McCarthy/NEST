@@ -6,7 +6,7 @@ Core::Core(QWidget *parent)
         rom(this),
         cpu(input),
         input(this),
-        ppu(nullptr, cpu)
+        ppu(nullptr, cpu, TOTAL_PPU_CLOCKS)
 {
 }
 
