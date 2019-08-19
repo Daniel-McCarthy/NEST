@@ -142,6 +142,7 @@ public:
     bool getMaskEmphasizeRedEnabled();
     bool getMaskEmphasizeGreenEnabled();
     bool getMaskEmphasizeBlueEnabled();
+    void oamDMATransfer(ushort address);
 
 };
 

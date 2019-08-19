@@ -125,3 +125,10 @@ bool Ppu::getMaskEmphasizeGreenEnabled() {
 bool Ppu::getMaskEmphasizeBlueEnabled() {
     return (getPPUMask() & 0b10000000) != 0;
 }
+
+void Ppu::oamDMATransfer(ushort address) {
+    for (int i = 0; i <= 0xFF; i++)
+    {
+        oamRam[i] = cpu.readCPURam((ushort)(address + i), false);
+    }
+}
