@@ -3,16 +3,17 @@
 #include <QList>
 #include <QColor>
 #include <QImage>
+#include <QWidget>
 
 struct Palette {
   QString paletteName;
   QColor paletteColors[12];
 };
 
-class Core;
 class Cpu;
-class Ppu
+class Ppu : public QWidget
 {
+    Q_OBJECT
 private:
     Cpu& cpu;
 
@@ -119,7 +120,7 @@ public:
     };
 
 
-    Ppu(Cpu& cpu);
+    Ppu(QWidget* parent, Cpu& cpu);
     ~Ppu();
     unsigned char readPPURamByte(ushort address);
     void writePPURamByte(ushort address, unsigned char value);
@@ -144,5 +145,7 @@ public:
     bool getMaskEmphasizeBlueEnabled();
     void oamDMATransfer(ushort address);
 
+signals:
+    void drawImageToScreen(QImage image);
 };
 

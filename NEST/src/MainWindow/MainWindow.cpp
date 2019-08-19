@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     installEventFilter(core->getInputPointer());
 
+    QObject::connect(core->getPpuPointer(), &Ppu::drawImageToScreen,
+                     canvas, &Canvas::drawImage);
+
     hLayout = new QHBoxLayout(ui->centralWidget);
     hLayout->setContentsMargins(0,0,0,0);
     hLayout->addWidget(canvas);
@@ -32,6 +35,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     removeEventFilter(core->getInputPointer());
+
+    QObject::disconnect(core->getPpuPointer(), &Ppu::drawImageToScreen,
+                     canvas, &Canvas::drawImage);
 
     delete ui;
     delete canvas;

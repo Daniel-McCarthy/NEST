@@ -1,8 +1,8 @@
 #include "Ppu.h"
 #include "Cpu.h"
 
-Ppu::Ppu(Cpu& cpu)
-    : cpu(cpu)
+Ppu::Ppu(QWidget* parent, Cpu& cpu)
+    : QWidget(parent), cpu(cpu)
 {
 }
 
