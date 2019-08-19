@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 #include "src/Canvas.h"
 #include "src/Core.h"
+#include "src/Ppu.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

@@ -11,6 +11,7 @@ class MainWindow;
 
 class Core;
 class Canvas;
+class Ppu;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

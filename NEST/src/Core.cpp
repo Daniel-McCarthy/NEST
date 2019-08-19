@@ -6,7 +6,7 @@ Core::Core(QWidget *parent)
         rom(this),
         cpu(input),
         input(this),
-        ppu(cpu)
+        ppu(nullptr, cpu)
 {
 }
 
