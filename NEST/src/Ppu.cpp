@@ -342,10 +342,10 @@ QVector<QColor> Ppu::drawBGLineFromNameTable(uint lineNumber, bool isLeftTable, 
 
         // Reverse contents of tileColorIndices
         int tileColorCount = tileColorIndices.count();
-        for (int i = 0; i < tileColorCount; i++) {
+        for (int i = 0; i < tileColorCount/2; i++) {
             unsigned char c = tileColorIndices[i];
-            tileColorIndices[i] = tileColorIndices[tileColorCount - i];
-            tileColorIndices[tileColorCount - i] = c;
+            tileColorIndices[i] = tileColorIndices[(tileColorCount - 1) - i];
+            tileColorIndices[(tileColorCount - 1) - i] = c;
         }
 
         //Draw current tile data to line
@@ -527,10 +527,10 @@ QVector<QColor> Ppu::drawBGTileLineFromNameTable(uint lineNumber, bool isLeftTab
 
     // Reverse contents of tileColorIndices
     int tileColorCount = tileColorIndices.count();
-    for (int i = 0; i < tileColorCount; i++) {
+    for (int i = 0; i < tileColorCount/2; i++) {
         unsigned char c = tileColorIndices[i];
-        tileColorIndices[i] = tileColorIndices[tileColorCount - i];
-        tileColorIndices[tileColorCount - i] = c;
+        tileColorIndices[i] = tileColorIndices[(tileColorCount - 1) - i];
+        tileColorIndices[(tileColorCount - 1) - i] = c;
     }
 
     //Draw current tile data to line
@@ -614,10 +614,10 @@ QVector<QColor> Ppu::drawSpriteLine(unsigned char lineNumber) {
             if (!isXFlipped) {
                 // Reverse contents of tileColorIndices
                 int tileColorCount = tileColorIndices.count();
-                for (int i = 0; i < tileColorCount; i++) {
+                for (int i = 0; i < tileColorCount/2; i++) {
                     unsigned char c = tileColorIndices[i];
-                    tileColorIndices[i] = tileColorIndices[tileColorCount - i];
-                    tileColorIndices[tileColorCount - i] = c;
+                    tileColorIndices[i] = tileColorIndices[(tileColorCount - 1) - i];
+                    tileColorIndices[(tileColorCount - 1) - i] = c;
                 }
             }
 
