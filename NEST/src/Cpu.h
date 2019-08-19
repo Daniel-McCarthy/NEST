@@ -7,6 +7,7 @@
 
 class Core;
 class Input;
+class Ppu;
 class Cpu : public QWidget
 {
     Q_OBJECT
@@ -52,6 +53,7 @@ private:
     unsigned char cpuRam[0x10000];
 
     Input& input;
+    Ppu& ppu;
 
     void opcode00();
     void opcode01();
@@ -226,7 +228,8 @@ public:
     uint tClock = 0;
     uint mClock = 0;
 
-    Cpu(Input& input);
+
+    Cpu(Input& input, Ppu& ppu);
     ~Cpu() {}
 
 	int returnTClock();
@@ -261,6 +264,8 @@ public:
     uchar getYRegister();
     void setStackPointer(uchar newSP);
 
+    void serviceInterrupt();
+    void serviceNonMaskableInterrupt();
 public slots:
 };
 

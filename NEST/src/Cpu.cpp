@@ -1,10 +1,11 @@
 #include "Core.h"
 #include "Cpu.h"
 #include "Binary.h"
-#include "Rom.h"
+#include "Input.h"
+#include "Ppu.h"
 
-Cpu::Cpu(Input& input)
-    : input(input)
+Cpu::Cpu(Input& input, Ppu& ppu)
+    : input(input), ppu(ppu)
 {
 }
 
@@ -2514,4 +2515,26 @@ uchar Cpu::getYRegister() {
 void Cpu::setStackPointer(uchar newSP)
 {
     stackPointer = newSP;
+}
+
+void Cpu::serviceInterrupt() {
+    if (!getFlagStatus(Interrupt_Disable_Flag) && pendingInterrupt)
+    {
+        pushStackU16(programCounter);
+        pushStackU8(statusRegister);
+
+        programCounter = (ushort)(readCPURam(0xFFFE) | (readCPURam(0xFFFF) << 8));
+        setFlagTo(Interrupt_Disable_Flag, true);
+    }
+}
+
+void Cpu::serviceNonMaskableInterrupt() {
+    if (ppu.pendingNMI)
+    {
+        pushStackU16(programCounter);
+        pushStackU8(statusRegister);
+
+        programCounter = (ushort)(readCPURam(0xFFFA) | (readCPURam(0xFFFB) << 8));
+        ppu.pendingNMI = false;
+    }
 }
