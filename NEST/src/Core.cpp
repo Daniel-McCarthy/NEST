@@ -4,9 +4,10 @@
 Core::Core(QWidget *parent)
     : QObject(parent),
         rom(this),
-        cpu(input),
+        cpu(input, ppu),
         input(this),
-        ppu(nullptr, cpu, TOTAL_PPU_CLOCKS)
+        ppu(nullptr, cpu, TOTAL_PPU_CLOCKS),
+        nrom(this, rom, ppu, cpu)
 {
 }
 
@@ -27,6 +28,10 @@ Input* Core::getInputPointer() {
 
 Ppu* Core::getPpuPointer() {
     return &ppu;
+}
+
+NROM* Core::getNROMPointer() {
+    return &nrom;
 }
 
 void Core::setPaused(bool setting) {

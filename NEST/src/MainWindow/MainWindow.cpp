@@ -46,6 +46,40 @@ MainWindow::~MainWindow()
     delete hLayout;
 }
 
+void MainWindow::on_actionOpen_triggered() {
+    QString filePath = QFileDialog::getOpenFileName(this, ("Open NES File"),
+                                                      "/home",
+                                                      ("NES Files (*.nes)"));
+    if (filePath == "") {
+        return;
+    }
+
+    setEmulationPaused(true);
+
+    Rom* rom = core->getRomPointer();
+    bool loadedSuccessfully = rom->loadRom(filePath);
+
+    if (loadedSuccessfully == false) {
+        return;
+    }
+
+    int mapperSetting = rom->getMapperSetting();
+
+    if(mapperSetting == 0)
+    {
+        core->getNROMPointer()->loadRom();
+    }
+
+    ushort resetAddress = 0;
+    Cpu* cpu = core->getCPUPointer();
+    resetAddress |= cpu->readCPURam(0xFFFC, true);
+    resetAddress |= (ushort)(cpu->readCPURam(0xFFFD, true) << 8);
+    cpu->programCounter = resetAddress;
+
+    startEmulationThread();
+
+}
+
 void MainWindow::startEmulationThread() {
     core->emulationLoop();
 }

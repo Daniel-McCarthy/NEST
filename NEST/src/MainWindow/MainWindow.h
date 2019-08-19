@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -28,6 +30,14 @@ private:
 
     void startEmulationThread();
     void endEmulationThread();
+private slots:
+    void on_actionOpen_triggered();
+
+signals:
+    void onGameFileOpened(QString filePath);
+    void setEmulationPaused(bool setting);
+    void setEmulationRun(bool setting);
+
 };
 
 #endif // MAINWINDOW_H
