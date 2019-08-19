@@ -557,7 +557,7 @@ QVector<QColor> Ppu::drawBGTileLineFromNameTable(uint lineNumber, bool isLeftTab
 }
 
 QVector<QColor> Ppu::drawSpriteLine(unsigned char lineNumber) {
-    QVector<QColor> line = QVector<QColor>(256);
+    QVector<QColor> line = QVector<QColor>(256, QColor(0,0,0,0));
 
     int spriteCount = oamRam.length() / 4;
 
