@@ -45,3 +45,11 @@ MainWindow::~MainWindow()
     delete core;
     delete hLayout;
 }
+
+void MainWindow::startEmulationThread() {
+    core->emulationLoop();
+}
+
+void MainWindow::endEmulationThread() {
+    emit setEmulationRun(false);
+}

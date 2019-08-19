@@ -25,6 +25,9 @@ private:
     Core* core = nullptr;
     Canvas* canvas;
     QHBoxLayout* hLayout;
+
+    void startEmulationThread();
+    void endEmulationThread();
 };
 
 #endif // MAINWINDOW_H
