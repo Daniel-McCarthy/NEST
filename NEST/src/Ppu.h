@@ -7,6 +7,8 @@
 #include <QTime>
 #include <QThread>
 
+#ifndef PPUH
+#define PPUH
 
 class Cpu;
 class Ppu : public QWidget
@@ -156,3 +158,4 @@ signals:
     void drawImageToScreen(QImage image);
 };
 
+#endif

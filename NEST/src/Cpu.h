@@ -5,7 +5,6 @@
 #ifndef CPUH
 #define CPUH
 
-class Core;
 class Input;
 class Ppu;
 class Cpu : public QWidget

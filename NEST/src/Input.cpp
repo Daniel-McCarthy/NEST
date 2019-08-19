@@ -1,5 +1,4 @@
 #include "Input.h"
-#include "Core.h"
 
 //NES keys:
 //[Up][Left][Right][Down][A][B][Start][Select]

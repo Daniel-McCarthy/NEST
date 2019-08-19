@@ -1,3 +1,5 @@
+#pragma once
+
 #include <QString>
 #include <QObject>
 #include <QFile>
@@ -5,9 +7,6 @@
 #ifndef ROMH
 #define ROMH
 
-
-#pragma once
-class Memory;
 class Rom : public QObject
 {
     Q_OBJECT
