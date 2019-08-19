@@ -132,3 +132,18 @@ void Ppu::oamDMATransfer(ushort address) {
         oamRam[i] = cpu.readCPURam((ushort)(address + i), false);
     }
 }
+
+/*
+ * This function accepts a 256px wide background and sprite line and writes them to the frame, with the background below and the sprites on top.
+ */
+void Ppu::drawLineToFrame(QList<QColor> backGroundLine, QList<QColor>  spriteLine, uint ly) {
+    if (ly < 240) {
+        for (uint x = 0; x < 256; x++) {
+            screen.setPixelColor(x, ly, backGroundLine[x]);
+
+            if (spriteLine[x].alpha() != 0) {
+                screen.setPixelColor(x, ly, spriteLine[x]);
+            }
+        }
+    }
+}

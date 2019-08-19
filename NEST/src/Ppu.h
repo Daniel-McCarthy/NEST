@@ -5,10 +5,6 @@
 #include <QImage>
 #include <QWidget>
 
-struct Palette {
-  QString paletteName;
-  QColor paletteColors[12];
-};
 
 class Cpu;
 class Ppu : public QWidget
@@ -145,6 +141,7 @@ public:
     bool getMaskEmphasizeBlueEnabled();
     void oamDMATransfer(ushort address);
 
+    void drawLineToFrame(QList<QColor> backGroundLine, QList<QColor>  spriteLine, uint ly);
 signals:
     void drawImageToScreen(QImage image);
 };
