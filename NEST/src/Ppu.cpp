@@ -133,10 +133,103 @@ void Ppu::oamDMATransfer(ushort address) {
     }
 }
 
+void Ppu::updatePPU(uint& ppuClocks) {
+    //Steps:
+    //Pre-render scan line 261 && -1
+    //Scan lines 0-239
+    //Post-render scan line 240
+    //V-Blank 241-260
+
+    //Information:
+    //262 scanlines
+    //240 screen drawn scan lines
+    //341 PPU clock cycles per scan line
+    //113 CPU clock cycles per scan line
+
+    //int CLOCKS_PER_SCANLINE = 341;
+
+    if (ppuState == PPU_STATE_PRERENDER) {
+        spriteZeroHit = false;
+
+        if (ppuClocks >= 341) {
+            ppuClocks -= 341;
+
+            if(ly == -1) {
+                //If this was the final pre-render scanline, switch to drawing state
+                ly++;
+                ppuState = PPU_STATE_DRAWING;
+            } else {
+                //If this was pre-render scanline 261, then switch to final pre-render scanline
+                ly = -1;
+            }
+        }
+
+    } else if (ppuState == PPU_STATE_DRAWING) {
+        if (ppuClocks >= 341) {
+            ppuClocks -= 341;
+
+            QVector<QColor> bgLine = drawBGFrameLine((uint)ly);
+            QVector<QColor> spriteLine = drawSpriteLine((unsigned char)ly);
+
+            drawLineToFrame(bgLine, spriteLine, (uint)ly);
+
+            ly++;
+
+            if(ly == 240) {
+                ppuState = PPU_STATE_POSTRENDER;
+            }
+        }
+
+    } else if (ppuState == PPU_STATE_POSTRENDER) {
+        if (ppuClocks >= 341) {
+            ppuClocks -= 341;
+
+            //If this was the final pre-render scanline, switch to drawing state
+            ly++;
+            ppuState = PPU_STATE_VBLANK;
+
+            if (getPPURegisterNMISetting()) {
+                pendingNMI = true;
+            }
+
+            //Draw frame to screen
+            drawImageToScreen(screen);
+
+            int millisecondsElapsed = screenUpdateTimer.elapsed();
+            if (millisecondsElapsed == 0) {
+                screenUpdateTimer.start();
+            } else {
+                if (millisecondsElapsed < 16) {
+                    QThread::msleep(16 - millisecondsElapsed);
+                }
+                screenUpdateTimer.restart();
+            }
+        }
+
+    } else if (ppuState == PPU_STATE_VBLANK) {
+        if (ppuClocks >= 341) {
+            ppuClocks -= 341;
+            ly++;
+        }
+
+        if (ly == 261) {
+            bool isEvenFrame = (frameCount % 2) == 0;
+            if (isEvenFrame) {
+                ppuState = PPU_STATE_PRERENDER;
+            }  else {
+                ppuState = PPU_STATE_DRAWING;
+                ly = 0;
+            }
+
+            frameCount++;
+        }
+    }
+}
+
 /*
  * This function accepts a 256px wide background and sprite line and writes them to the frame, with the background below and the sprites on top.
  */
-void Ppu::drawLineToFrame(QList<QColor> backGroundLine, QList<QColor>  spriteLine, uint ly) {
+void Ppu::drawLineToFrame(QVector<QColor> backGroundLine, QVector<QColor>  spriteLine, uint ly) {
     if (ly < 240) {
         for (uint x = 0; x < 256; x++) {
             screen.setPixelColor(x, ly, backGroundLine[x]);

@@ -4,6 +4,8 @@
 #include <QColor>
 #include <QImage>
 #include <QWidget>
+#include <QTime>
+#include <QThread>
 
 
 class Cpu;
@@ -13,6 +15,7 @@ class Ppu : public QWidget
 private:
     Cpu& cpu;
     uint& TOTAL_PPU_CLOCKS;
+    QTime screenUpdateTimer;
 
 public:
     QImage screen = QImage(256, 240, QImage::Format_RGB32);
@@ -142,12 +145,13 @@ public:
     bool getMaskEmphasizeBlueEnabled();
     void oamDMATransfer(ushort address);
 
-    void drawLineToFrame(QList<QColor> backGroundLine, QList<QColor>  spriteLine, uint ly);
+    void drawLineToFrame(QVector<QColor> backGroundLine, QVector<QColor>  spriteLine, uint ly);
     void drawFullBGLineToWindow(uint lineNumber);
     QVector<QColor> drawBGLineFromNameTable(uint lineNumber, bool isLeftTable, bool isUpperTable);
     QVector<QColor> drawBGFrameLine(uint lineNumber);
     QVector<QColor> drawBGTileLineFromNameTable(uint lineNumber, bool isLeftTable, bool isUpperTable, int tileXPos, int tileYPos);
     QVector<QColor> drawSpriteLine(unsigned char lineNumber);
+    void updatePPU(uint& ppuClocks);
 signals:
     void drawImageToScreen(QImage image);
 };
