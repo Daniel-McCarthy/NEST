@@ -23,6 +23,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(core->getPpuPointer(), &Ppu::drawImageToScreen,
                      canvas, &Canvas::drawImage);
 
+    QObject::connect(this, &MainWindow::setEmulationPaused,
+                             core, &Core::setPaused);
+
+    QObject::connect(this, &MainWindow::setEmulationRun,
+                             core, &Core::setRun);
+
     hLayout = new QHBoxLayout(ui->centralWidget);
     hLayout->setContentsMargins(0,0,0,0);
     hLayout->addWidget(canvas);
@@ -38,6 +44,12 @@ MainWindow::~MainWindow()
 
     QObject::disconnect(core->getPpuPointer(), &Ppu::drawImageToScreen,
                      canvas, &Canvas::drawImage);
+
+    QObject::disconnect(this, &MainWindow::setEmulationPaused,
+                             core, &Core::setPaused);
+
+    QObject::disconnect(this, &MainWindow::setEmulationRun,
+                             core, &Core::setRun);
 
     delete ui;
     delete canvas;
