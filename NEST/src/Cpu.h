@@ -263,6 +263,7 @@ public:
     uchar getYRegister();
     void setStackPointer(uchar newSP);
 
+    void fetchAndExecute();
     void serviceInterrupt();
     void serviceNonMaskableInterrupt();
 public slots:

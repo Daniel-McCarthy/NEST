@@ -48,6 +48,8 @@ void Core::setStep(bool setting) {
 void Core::emulationLoop() {
     while(run) {
         if (!paused || step) {
+            cpu.fetchAndExecute();
+
             uint cpuClocks = cpu.mClock;
             uint ppuClocks = cpuClocks * 3;
 
