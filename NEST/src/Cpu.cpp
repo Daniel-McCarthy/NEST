@@ -73,18 +73,18 @@ unsigned char Cpu::readCPURam(ushort address, bool ignoreCycles)
 
     if (address == PPU_STATUS_REGISTER) {
         // To be implemented with PPU
-        return Core.ppu.getPPUStatus();
+        return ppu.getPPUStatus();
 
     } else if (address == PPU_DATA_REGISTER) {
         // To be implemented with PPU
-        ushort ppuAddress = Core.ppu.ppuWriteAddress;
+        ushort ppuAddress = ppu.ppuWriteAddress;
 
         if(ppuAddress > 0x3FFF) {
             ppuAddress %= 0x3FFF;
         }
 
-        uchar value = Core.ppu.readPPURamByte(ppuAddress);
-        Core.ppu.ppuWriteAddress += (ushort)(Core.ppu.getPPURegisterVRAMIncrement());
+        uchar value = ppu.readPPURamByte(ppuAddress);
+        ppu.ppuWriteAddress += (ushort)(ppu.getPPURegisterVRAMIncrement());
         return value;
 
     } else if (address == JOYPAD1_REGISTER) {
@@ -107,8 +107,8 @@ void Cpu::writeCPURam(ushort address, uchar value, bool ignoreCycles) {
 
     } else if (address == PPU_DATA_REGISTER) {
         // To be implemented with PPU
-        ppu.writePPURamByte(Core.ppu.ppuWriteAddress, value);
-        ppu.ppuWriteAddress += (ushort)(Core.ppu.getPPURegisterVRAMIncrement());
+        ppu.writePPURamByte(ppu.ppuWriteAddress, value);
+        ppu.ppuWriteAddress += (ushort)(ppu.getPPURegisterVRAMIncrement());
 
     } else if(address == PPU_DATA_ADDRESS_REGISTER) {
         // To be implemented with PPU
@@ -122,37 +122,37 @@ void Cpu::writeCPURam(ushort address, uchar value, bool ignoreCycles) {
             ppu.tempPPUWriteAddress &= 0xFF00;
             ppu.tempPPUWriteAddress |= value;
             ppu.ppuAddressWrittenOnce = false;
-            ppu.ppuWriteAddress = Core.ppu.tempPPUWriteAddress;
+            ppu.ppuWriteAddress = ppu.tempPPUWriteAddress;
         }
 
     } else if (address == OAM_DATA_REGISTER) {
         // To be implemented with PPU
-        ppu.writeOAMRamByte(Core.ppu.oamWriteAddress, value);
+        ppu.writeOAMRamByte(ppu.oamWriteAddress, value);
 
     } else if(address == OAM_DATA_ADDRESS_REGISTER) {
         // To be implemented with PPU
         //Set byte of OAM Write Address
-        if(!Core.ppu.oamAddressWrittenOnce)
+        if(!ppu.oamAddressWrittenOnce)
         {
-            Core.ppu.tempOAMWriteAddress &= 0x00FF;
-            Core.ppu.tempOAMWriteAddress |= (ushort)(value << 8);
-            Core.ppu.oamAddressWrittenOnce = true;
+            ppu.tempOAMWriteAddress &= 0x00FF;
+            ppu.tempOAMWriteAddress |= (ushort)(value << 8);
+            ppu.oamAddressWrittenOnce = true;
         }
         else
         {
-            Core.ppu.tempOAMWriteAddress &= 0xFF00;
-            Core.ppu.tempOAMWriteAddress |= value;
-            Core.ppu.oamWriteAddress = Core.ppu.tempOAMWriteAddress;
-            Core.ppu.oamAddressWrittenOnce = false;
+            ppu.tempOAMWriteAddress &= 0xFF00;
+            ppu.tempOAMWriteAddress |= value;
+            ppu.oamWriteAddress = ppu.tempOAMWriteAddress;
+            ppu.oamAddressWrittenOnce = false;
         }
     } else if (address == PPU_SCROLL_REGISTER) {
         // To be implemented with PPU
-        if (!Core.ppu.scrollWrittenOnce) {
-            Core.ppu.scrollX = value;
-            Core.ppu.scrollWrittenOnce = true;
+        if (!ppu.scrollWrittenOnce) {
+            ppu.scrollX = value;
+            ppu.scrollWrittenOnce = true;
         } else {
-            Core.ppu.scrollY = value;
-            Core.ppu.scrollWrittenOnce = false;
+            ppu.scrollY = value;
+            ppu.scrollWrittenOnce = false;
         }
 
     } else if (address == JOYPAD1_REGISTER) {
