@@ -85,11 +85,13 @@ void MainWindow::on_actionOpen_triggered() {
     rom->readRomHeader();
     int mapperSetting = rom->getMapperSetting();
 
-    if(mapperSetting == 0)
+    if (mapperSetting == 0)
     {
         core->getNROMPointer()->loadRom();
     } else if (mapperSetting == 1) {
         core->getMMC1Pointer()->loadRom();
+    } else if (mapperSetting == 2) {
+        core->getUNROMPointer()->loadRom();
     }
 
     ushort resetAddress = 0;

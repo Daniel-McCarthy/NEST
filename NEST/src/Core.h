@@ -11,6 +11,7 @@
 #include "src/Mappers/Mapper.h"
 #include "src/Mappers/NROM.h"
 #include "src/Mappers/MMC1.h"
+#include "src/Mappers/UNROM.h"
 
 class Core : public QObject
 {
@@ -25,6 +26,7 @@ public:
     Mapper* getMapperPointer();
     NROM* getNROMPointer();
     MMC1* getMMC1Pointer();
+    UNROM* getUNROMPointer();
 
     bool run = false;
     bool paused = false;
@@ -43,6 +45,7 @@ private:
     Mapper mapper;
     NROM nrom;
     MMC1 mmc1;
+    UNROM unrom;
 
     const int NROM_ID   = 0x00;
     const int MMC1_ID   = 0x01;
