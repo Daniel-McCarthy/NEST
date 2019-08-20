@@ -12,14 +12,6 @@ class Cpu : public QWidget
     Q_OBJECT
 
 private:
-
-    //NEST CPU Registers
-    unsigned char accumulator = 0;                                          //Contains results of arithmetic functions
-    unsigned char xAddress = 0;                                             //X Index Value
-    unsigned char yAddress = 0;                                             //Y Index Value
-    unsigned char stackPointer = 0xFD;                                      //Tracks position in the stack
-    unsigned char statusRegister = 0 | Empty_Flag | Interrupt_Disable_Flag; //Tracks what flags are set in the CPU
-
     const unsigned char Carry_Flag               = 0x1;          //C
     const unsigned char Zero_Flag                = 0x1 << 1;     //Z
     const unsigned char Interrupt_Disable_Flag   = 0x1 << 2;     //I
@@ -40,6 +32,13 @@ private:
     const unsigned short OAM_DMA_REGISTER           = 0x4014;
     const unsigned short JOYPAD1_REGISTER           = 0x4016;
     const unsigned short JOYPAD2_REGISTER           = 0x4017;
+
+    //NEST CPU Registers
+    unsigned char accumulator = 0;                                          //Contains results of arithmetic functions
+    unsigned char xAddress = 0;                                             //X Index Value
+    unsigned char yAddress = 0;                                             //Y Index Value
+    unsigned char stackPointer = 0xFD;                                      //Tracks position in the stack
+    unsigned char statusRegister = 0 | Empty_Flag | Interrupt_Disable_Flag; //Tracks what flags are set in the CPU
 
     // CPU Ram Map:
     // 0x0000-0x07FF: Internal Ram
