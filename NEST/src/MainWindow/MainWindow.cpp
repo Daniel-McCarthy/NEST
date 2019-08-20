@@ -38,6 +38,11 @@ MainWindow::MainWindow(QWidget *parent) :
     canvas->drawImage(image);
 }
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+    setEmulationRun(false);
+    event->accept();
+}
+
 MainWindow::~MainWindow()
 {
     removeEventFilter(core->getInputPointer());

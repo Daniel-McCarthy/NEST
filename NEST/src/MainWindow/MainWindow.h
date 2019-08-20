@@ -29,6 +29,9 @@ private:
 
     void startEmulationThread();
     void endEmulationThread();
+
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void on_actionOpen_triggered();
 
