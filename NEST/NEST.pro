@@ -32,7 +32,8 @@ SOURCES += \
     src/Input.cpp \
     src/Binary.cpp \
     src/Rom.cpp \
-    src/Ppu.cpp
+    src/Ppu.cpp \
+    src/Mappers/NROM.cpp
 
 HEADERS += \
         src/MainWindow/MainWindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     src/Input.h \
     src/Binary.h \
     src/Rom.h \
-    src/Ppu.h
+    src/Ppu.h \
+    src/Mappers/NROM.h
 
 FORMS += \
         src/MainWindow/MainWindow.ui
