@@ -8,6 +8,7 @@
 #include "src/Cpu.h"
 #include "src/Input.h"
 #include "src/Ppu.h"
+#include "src/Mappers/Mapper.h"
 #include "src/Mappers/NROM.h"
 
 class Core : public QObject
@@ -20,6 +21,7 @@ public:
     Cpu* getCPUPointer();
     Input* getInputPointer();
     Ppu* getPpuPointer();
+    Mapper* getMapperPointer();
     NROM* getNROMPointer();
 
     bool run = false;
@@ -36,6 +38,7 @@ private:
     Cpu cpu;
     Ppu ppu;
     Input input;
+    Mapper mapper;
     NROM nrom;
 
     const int NROM_ID   = 0x00;

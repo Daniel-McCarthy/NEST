@@ -7,6 +7,7 @@ Core::Core(QWidget *parent)
         cpu(input, ppu),
         input(this),
         ppu(nullptr, cpu, TOTAL_PPU_CLOCKS),
+        mapper(nullptr, rom),
         nrom(this, rom, ppu, cpu)
 {
 }
@@ -28,6 +29,10 @@ Input* Core::getInputPointer() {
 
 Ppu* Core::getPpuPointer() {
     return &ppu;
+}
+
+Mapper* Core::getMapperPointer() {
+    return &mapper;
 }
 
 NROM* Core::getNROMPointer() {
