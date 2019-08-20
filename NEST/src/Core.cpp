@@ -48,6 +48,9 @@ void Core::setStep(bool setting) {
 void Core::emulationLoop() {
     while(run) {
         if (!paused || step) {
+            if ( ppu.pendingNMI ) { cpu.serviceNonMaskableInterrupt(); }
+            else { cpu.serviceInterrupt(); }
+
             cpu.fetchAndExecute();
 
             uint cpuClocks = cpu.mClock;

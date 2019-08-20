@@ -25,7 +25,6 @@ public:
     bool run = false;
     bool paused = false;
     bool step = false;
-    bool pendingNMI = false;
 
     uint TOTAL_CPU_CLOCKS = 0;
     uint TOTAL_PPU_CLOCKS = 0;
