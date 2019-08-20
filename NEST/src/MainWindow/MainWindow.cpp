@@ -66,6 +66,7 @@ void MainWindow::on_actionOpen_triggered() {
     }
 
     setEmulationPaused(true);
+    setEmulationRun(false);
 
     Rom* rom = core->getRomPointer();
     bool loadedSuccessfully = rom->loadRom(filePath);
@@ -74,6 +75,7 @@ void MainWindow::on_actionOpen_triggered() {
         return;
     }
 
+    rom->readRomHeader();
     int mapperSetting = rom->getMapperSetting();
 
     if(mapperSetting == 0)
@@ -87,6 +89,8 @@ void MainWindow::on_actionOpen_triggered() {
     resetAddress |= (ushort)(cpu->readCPURam(0xFFFD, true) << 8);
     cpu->programCounter = resetAddress;
 
+    setEmulationPaused(false);
+    setEmulationRun(true);
     startEmulationThread();
 
 }
