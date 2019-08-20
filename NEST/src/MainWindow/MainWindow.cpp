@@ -94,6 +94,8 @@ void MainWindow::on_actionOpen_triggered() {
         core->getUNROMPointer()->loadRom();
     } else if (mapperSetting == 3) {
         core->getCNROMPointer()->loadRom();
+    } else if (mapperSetting == 4) {
+        core->getMMC3Pointer()->loadRom();
     }
 
     ushort resetAddress = 0;

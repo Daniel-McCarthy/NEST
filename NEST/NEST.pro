@@ -37,7 +37,8 @@ SOURCES += \
     src/Mappers/Mapper.cpp \
     src/Mappers/MMC1.cpp \
     src/Mappers/UNROM.cpp \
-    src/Mappers/CNROM.cpp
+    src/Mappers/CNROM.cpp \
+    src/Mappers/MMC3.cpp
 
 HEADERS += \
         src/MainWindow/MainWindow.h \
@@ -52,7 +53,8 @@ HEADERS += \
     src/Mappers/Mapper.h \
     src/Mappers/MMC1.h \
     src/Mappers/UNROM.h \
-    src/Mappers/CNROM.h
+    src/Mappers/CNROM.h \
+    src/Mappers/MMC3.h
 
 FORMS += \
         src/MainWindow/MainWindow.ui
