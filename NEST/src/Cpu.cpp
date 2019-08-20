@@ -2,9 +2,10 @@
 #include "Binary.h"
 #include "Input.h"
 #include "Ppu.h"
+#include "Mappers/Mapper.h"
 
-Cpu::Cpu(Input& input, Ppu& ppu)
-    : input(input), ppu(ppu)
+Cpu::Cpu(Input& input, Ppu& ppu, Mapper& mapper)
+    : input(input), ppu(ppu), mapper(mapper)
 {
 }
 
@@ -98,7 +99,11 @@ void Cpu::writeCPURam(ushort address, uchar value, bool ignoreCycles) {
         mClock += 1;
         tClock += 4;
     }
-    if (address == OAM_DMA_REGISTER) {
+
+    if(mapper.isMapperWriteAddress(address)) {
+        mapper.writeToCurrentMapper(address, value);
+
+    } else if (address == OAM_DMA_REGISTER) {
         //Initiate DMA tranfer from (XX00 to XXFF) to OAM Ram
         ushort oamAddress = (ushort)(value << 8);
         ppu.oamDMATransfer(oamAddress);

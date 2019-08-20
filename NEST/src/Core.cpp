@@ -4,11 +4,12 @@
 Core::Core(QWidget *parent)
     : QObject(parent),
         rom(this),
-        cpu(input, ppu),
+        cpu(input, ppu, mapper),
         input(this),
         ppu(nullptr, cpu, TOTAL_PPU_CLOCKS),
-        mapper(nullptr, rom),
-        nrom(this, rom, ppu, cpu)
+        mapper(nullptr, rom, mmc1),
+        nrom(this, rom, ppu, cpu),
+        mmc1(this, rom, ppu, cpu)
 {
 }
 
@@ -37,6 +38,10 @@ Mapper* Core::getMapperPointer() {
 
 NROM* Core::getNROMPointer() {
     return &nrom;
+}
+
+MMC1* Core::getMMC1Pointer() {
+    return &mmc1;
 }
 
 void Core::setPaused(bool setting) {

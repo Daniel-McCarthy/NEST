@@ -7,6 +7,7 @@
 
 class Input;
 class Ppu;
+class Mapper;
 class Cpu : public QWidget
 {
     Q_OBJECT
@@ -52,6 +53,7 @@ private:
 
     Input& input;
     Ppu& ppu;
+    Mapper& mapper;
 
     void opcode00();
     void opcode01();
@@ -227,7 +229,7 @@ public:
     uint mClock = 0;
 
 
-    Cpu(Input& input, Ppu& ppu);
+    Cpu(Input& input, Ppu& ppu, Mapper& mapper);
     ~Cpu() {}
 
 	int returnTClock();

@@ -86,6 +86,8 @@ void MainWindow::on_actionOpen_triggered() {
     if(mapperSetting == 0)
     {
         core->getNROMPointer()->loadRom();
+    } else if (mapperSetting == 1) {
+        core->getMMC1Pointer()->loadRom();
     }
 
     ushort resetAddress = 0;

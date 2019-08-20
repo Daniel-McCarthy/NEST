@@ -34,7 +34,8 @@ SOURCES += \
     src/Rom.cpp \
     src/Ppu.cpp \
     src/Mappers/NROM.cpp \
-    src/Mappers/Mapper.cpp
+    src/Mappers/Mapper.cpp \
+    src/Mappers/MMC1.cpp
 
 HEADERS += \
         src/MainWindow/MainWindow.h \
@@ -46,7 +47,8 @@ HEADERS += \
     src/Rom.h \
     src/Ppu.h \
     src/Mappers/NROM.h \
-    src/Mappers/Mapper.h
+    src/Mappers/Mapper.h \
+    src/Mappers/MMC1.h
 
 FORMS += \
         src/MainWindow/MainWindow.ui
