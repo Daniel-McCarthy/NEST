@@ -204,6 +204,7 @@ void Ppu::updatePPU(uint& ppuClocks) {
                 }
                 screenUpdateTimer.restart();
             }
+            processPolling = true;
         }
 
     } else if (ppuState == PPU_STATE_VBLANK) {
