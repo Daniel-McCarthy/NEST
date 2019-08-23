@@ -10,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->actionPause->setEnabled(false);
+    ui->actionResume->setEnabled(false);
+    ui->actionResume->setVisible(false);
+
     core = new Core();
     canvas = new Canvas(this);
     canvas->move(0,21);
@@ -82,6 +86,9 @@ void MainWindow::on_actionOpen_triggered() {
         return;
     }
 
+    ui->actionPause->setEnabled(true);
+    ui->actionResume->setEnabled(true);
+
     rom->readRomHeader();
     int mapperSetting = rom->getMapperSetting();
 
@@ -116,4 +123,17 @@ void MainWindow::startEmulationThread() {
 
 void MainWindow::endEmulationThread() {
     emit setEmulationRun(false);
+}
+
+
+void MainWindow::on_actionPause_triggered() {
+    ui->actionPause->setVisible(false);
+    ui->actionResume->setVisible(true);
+    setEmulationPaused(true);
+}
+
+void MainWindow::on_actionResume_triggered() {
+    ui->actionPause->setVisible(true);
+    ui->actionResume->setVisible(false);
+    setEmulationPaused(false);
 }
