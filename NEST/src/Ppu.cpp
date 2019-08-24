@@ -360,10 +360,10 @@ QVector<QColor> Ppu::drawBGLineFromNameTable(uint lineNumber, bool isLeftTable, 
                 //unsigned char colorAddress = (unsigned char)((tilePalette * 4) + tileColorIndices[i]);
                 unsigned char colorAddress = (unsigned char)((tilePalette << 2) | tileColorIndices[i]);
                 unsigned char colorIndex = ppuRam[0x3F00 + colorAddress];
-                pixelColor = palette[colorIndex];
+                pixelColor = palettes[paletteSetting].paletteColors[colorIndex];
             } else {
                 //Read Default BG Color.
-                pixelColor = palette[ppuRam[0x3F00]];
+                pixelColor = palettes[paletteSetting].paletteColors[ppuRam[0x3F00]];
             }
 
             line[(tileIndex * 8) + i] = pixelColor;
@@ -545,10 +545,10 @@ QVector<QColor> Ppu::drawBGTileLineFromNameTable(uint lineNumber, bool isLeftTab
             //unsigned char colorAddress = (unsigned char)((tilePalette * 4) + tileColorIndices[i]);
             unsigned char colorAddress = (unsigned char)((tilePalette << 2) | tileColorIndices[i]);
             unsigned char colorIndex = ppuRam[0x3F00 + colorAddress];
-            pixelColor = palette[colorIndex];
+            pixelColor = palettes[paletteSetting].paletteColors[colorIndex];
         } else {
             //Read Default BG Color.
-            pixelColor = palette[ppuRam[0x3F00]];
+            pixelColor = palettes[paletteSetting].paletteColors[ppuRam[0x3F00]];
         }
 
         line[i] = pixelColor;
@@ -635,7 +635,7 @@ QVector<QColor> Ppu::drawSpriteLine(unsigned char lineNumber) {
                     //unsigned char colorAddress = (unsigned char)((tilePalette * 4) + tileColorIndices[i]);
                     unsigned char colorAddress = (unsigned char)((spritePalette << 2) | tileColorIndices[i]);
                     unsigned char colorIndex = ppuRam[0x3F00 + colorAddress];
-                    pixelColor = palette[colorIndex];
+                    pixelColor = palettes[paletteSetting].paletteColors[colorIndex];
 
                     if ((spriteXPos + i) < line.length() && !isBelowBackground)
                         line[spriteXPos + i] = pixelColor;
