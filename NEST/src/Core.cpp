@@ -92,7 +92,7 @@ void Core::emulationLoop() {
             cpu.tClock = 0;
         }
 
-        if (ppu.processPolling) {
+        if (ppu.processPolling || paused) {
             //Poll QT Events
             QCoreApplication::processEvents();
             ppu.processPolling = false;
