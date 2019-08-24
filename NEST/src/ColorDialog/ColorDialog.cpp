@@ -327,7 +327,6 @@ void ColorDialog::indexChanged(int row, int column) {
     }
 }
 
-//void ColorDialog::setPalette(QModelIndex& index) {
 void ColorDialog::setPalette() {
     int paletteRow = ui->listView->currentIndex().row();
     overwritePPUPaletteAtIndexWithCurrentPalette(paletteRow);
@@ -434,7 +433,6 @@ void ColorDialog::savePaletteToFile() {
     if (!savePath.endsWith(".pal", Qt::CaseInsensitive)) {
         savePath += ".pal";
     }
-//    savePath = savePath;
 
     if (savePath.length() <= 0) {
         return;
