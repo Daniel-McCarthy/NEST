@@ -38,7 +38,10 @@ SOURCES += \
     src/Mappers/MMC1.cpp \
     src/Mappers/UNROM.cpp \
     src/Mappers/CNROM.cpp \
-    src/Mappers/MMC3.cpp
+    src/Mappers/MMC3.cpp \
+    src/ColorDialog/ColorDialog.cpp \
+    src/ColorDialog/ColorSelectorWidget.cpp \
+    src/ColorDialog/PaletteListView.cpp
 
 HEADERS += \
         src/MainWindow/MainWindow.h \
@@ -54,10 +57,14 @@ HEADERS += \
     src/Mappers/MMC1.h \
     src/Mappers/UNROM.h \
     src/Mappers/CNROM.h \
-    src/Mappers/MMC3.h
+    src/Mappers/MMC3.h \
+    src/ColorDialog/ColorDialog.h \
+    src/ColorDialog/ColorSelectorWidget.h \
+    src/ColorDialog/PaletteListView.h
 
 FORMS += \
-        src/MainWindow/MainWindow.ui
+        src/MainWindow/MainWindow.ui \
+    src/ColorDialog/ColorDialog.ui
 
 RESOURCES += \
     resources.qrc

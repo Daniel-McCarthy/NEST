@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 #include "src/Canvas.h"
 #include "src/Core.h"
+#include "src/ColorDialog/ColorDialog.h"
 
 #include "QFileDialog"
 
@@ -137,3 +138,25 @@ void MainWindow::on_actionResume_triggered() {
     ui->actionResume->setVisible(false);
     setEmulationPaused(false);
 }
+
+void MainWindow::on_actionPalette_triggered() {
+    if (currentColorDialog != NULL) {
+        return;
+    }
+
+    currentColorDialog = new ColorDialog(this, core->getPpuPointer());
+
+    QObject::connect(currentColorDialog, &ColorDialog::finished,
+                     this, &MainWindow::paletteWindowClosed);
+
+    currentColorDialog->show();
+}
+
+void MainWindow::paletteWindowClosed() {
+    QObject::disconnect(currentColorDialog, &ColorDialog::finished,
+                        this, &MainWindow::paletteWindowClosed);
+
+    delete currentColorDialog;
+    currentColorDialog = NULL;
+}
+

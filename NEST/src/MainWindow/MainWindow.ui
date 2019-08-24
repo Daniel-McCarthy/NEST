@@ -27,7 +27,14 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuSettings">
+     <property name="title">
+      <string>Settings</string>
+     </property>
+     <addaction name="actionPalette"/>
+    </widget>
     <addaction name="actionOpen"/>
+    <addaction name="menuSettings"/>
    </widget>
    <widget class="QMenu" name="menuStatus">
     <property name="title">
@@ -55,6 +62,11 @@
   <action name="actionResume">
    <property name="text">
     <string>Resume</string>
+   </property>
+  </action>
+  <action name="actionPalette">
+   <property name="text">
+    <string>Palette</string>
    </property>
   </action>
  </widget>

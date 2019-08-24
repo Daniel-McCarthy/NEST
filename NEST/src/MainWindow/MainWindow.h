@@ -13,6 +13,7 @@ class MainWindow;
 
 class Core;
 class Canvas;
+class ColorDialog;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -26,6 +27,7 @@ private:
     Core* core = nullptr;
     Canvas* canvas;
     QHBoxLayout* hLayout;
+    ColorDialog* currentColorDialog = NULL;
 
     void startEmulationThread();
     void endEmulationThread();
@@ -36,6 +38,8 @@ private slots:
     void on_actionOpen_triggered();
     void on_actionPause_triggered();
     void on_actionResume_triggered();
+    void on_actionPalette_triggered();
+    void paletteWindowClosed();
 
 signals:
     void onGameFileOpened(QString filePath);
