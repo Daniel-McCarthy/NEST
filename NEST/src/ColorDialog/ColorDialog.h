@@ -6,6 +6,7 @@
 #include <QStandardItem>
 #include <QStandardItemModel>
 #include <QPushButton>
+#include <QAction>
 
 namespace Ui {
 class ColorDialog;
