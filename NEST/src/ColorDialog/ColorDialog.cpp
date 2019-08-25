@@ -104,7 +104,8 @@ void ColorDialog::loadPalettes() {
 }
 
 void ColorDialog::loadPaletteFromFile() {
-    QString openFilePath = QFileDialog::getOpenFileName(this, "Open Palette file", NULL, tr("Palettes (*.pal)"));
+    QString appPath = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
+    QString openFilePath = QFileDialog::getOpenFileName(this, "Open Palette file", appPath, tr("Palettes (*.pal)"));
     QFile file(openFilePath);
 
     if (!file.open(QIODevice::ReadOnly)) {
