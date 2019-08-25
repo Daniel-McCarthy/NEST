@@ -70,8 +70,13 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::on_actionOpen_triggered() {
+    QString initialDirectory = QDir::homePath();
+    if (initialDirectory == "" ) {
+        initialDirectory = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
+    }
+
     QString filePath = QFileDialog::getOpenFileName(this, ("Open NES File"),
-                                                      "/home",
+                                                      initialDirectory,
                                                       ("NES Files (*.nes)"));
     if (filePath == "") {
         return;
