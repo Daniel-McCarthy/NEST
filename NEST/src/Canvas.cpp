@@ -63,10 +63,10 @@ void Canvas::paintGL() {
 void Canvas::buildDrawingSurface() {
     GLfloat vertices[] = {
         // Vertex Positions         // Texture Coordinates      // Normals
-        -2.21f,  2.05f, 0.0f,      0.0f, 1.0f,                 0.0f, 0.0f, 1.0f, // Top Left
-        -2.21f, -2.09f, 0.0f,      0.0f, 0.0f,                 0.0f, 0.0f, 1.0f, // Bottom Left
-         2.21f,  2.05f, 0.0f,      1.0f, 1.0f,                 0.0f, 0.0f, 1.0f, // Top Right
-         2.21f, -2.09f, 0.0f,      1.0f, 0.0f,                 0.0f, 0.0f, 1.0f, // Bottom Right
+        -2.21f,  2.07f, 0.0f,      0.0f, 1.0f,                 0.0f, 0.0f, 1.0f, // Top Left
+        -2.21f, -2.07f, 0.0f,      0.0f, 0.0f,                 0.0f, 0.0f, 1.0f, // Bottom Left
+         2.21f,  2.07f, 0.0f,      1.0f, 1.0f,                 0.0f, 0.0f, 1.0f, // Top Right
+         2.21f, -2.07f, 0.0f,      1.0f, 0.0f,                 0.0f, 0.0f, 1.0f, // Bottom Right
     };
 
     GLuint indices[] = {
