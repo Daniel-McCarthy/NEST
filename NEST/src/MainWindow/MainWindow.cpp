@@ -165,3 +165,39 @@ void MainWindow::paletteWindowClosed() {
     currentColorDialog = NULL;
 }
 
+void MainWindow::on_actionSetScale1x_triggered() {
+    setWindowScale(1);
+}
+
+void MainWindow::on_actionSetScale2x_triggered() {
+    setWindowScale(2);
+}
+
+void MainWindow::on_actionSetScale3x_triggered() {
+    setWindowScale(3);
+}
+
+void MainWindow::on_actionSetScale4x_triggered() {
+    setWindowScale(4);
+}
+
+void MainWindow::setWindowScale(uint multiple) {
+    uint nesWidth = 256;
+    uint nesHeight = 240;
+    uint scaledWidth = nesWidth * multiple;
+    uint scaledHeight = nesHeight * multiple;
+    QDesktopWidget desktopWidget;
+    QRect monitorRect = desktopWidget.screenGeometry(desktopWidget.primaryScreen());
+
+    if (scaledHeight > monitorRect.height() || scaledWidth > monitorRect.width()) {
+        uint newMultiple = monitorRect.height() / nesHeight;
+        scaledWidth = nesWidth * newMultiple;
+        scaledHeight = nesHeight * newMultiple;
+    }
+
+    uint newWindowWidth = scaledWidth;
+    uint newWindowHeight = scaledHeight + ui->menuBar->height();
+
+    resize(newWindowWidth, newWindowHeight);
+}
+

@@ -31,7 +31,17 @@
      <property name="title">
       <string>Settings</string>
      </property>
+     <widget class="QMenu" name="menuScale">
+      <property name="title">
+       <string>Scale</string>
+      </property>
+      <addaction name="actionSetScale1x"/>
+      <addaction name="actionSetScale2x"/>
+      <addaction name="actionSetScale3x"/>
+      <addaction name="actionSetScale4x"/>
+     </widget>
      <addaction name="actionPalette"/>
+     <addaction name="menuScale"/>
     </widget>
     <addaction name="actionOpen"/>
     <addaction name="menuSettings"/>
@@ -67,6 +77,26 @@
   <action name="actionPalette">
    <property name="text">
     <string>Palette</string>
+   </property>
+  </action>
+  <action name="actionSetScale1x">
+   <property name="text">
+    <string>1x</string>
+   </property>
+  </action>
+  <action name="actionSetScale2x">
+   <property name="text">
+    <string>2x</string>
+   </property>
+  </action>
+  <action name="actionSetScale3x">
+   <property name="text">
+    <string>3x</string>
+   </property>
+  </action>
+  <action name="actionSetScale4x">
+   <property name="text">
+    <string>4x</string>
    </property>
   </action>
  </widget>
