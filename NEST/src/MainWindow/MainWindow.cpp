@@ -240,3 +240,37 @@ bool MainWindow::loadSaveFile(QByteArray saveFile) {
         return false;
     }
 }
+
+QByteArray MainWindow::returnSaveDataFromCpuRam() {
+    QByteArray memory;
+    Cpu* cpu = core->getCPUPointer();
+    unsigned short address = 0x6000;
+    for (int i = 0; i <= 0x1FFF; i++) {
+        memory.push_back(cpu->readCPURam((ushort)(address + i), true));
+    }
+
+    return memory;
+}
+
+bool MainWindow::createSaveFile(bool overwrite) {
+    Rom* rom = core->getRomPointer();
+    unsigned char mapperSetting = rom->getMapperSetting();
+    bool romUsesRam = mapperSetting == rom->NROM_ID || mapperSetting == rom->MMC1_ID || mapperSetting == rom->MMC3_ID || mapperSetting == rom->MMC5_ID;
+
+    if (romUsesRam) {
+        QByteArray saveData = returnSaveDataFromMemory();
+
+        //Attempt to open file, to check if it exists and potentially overwrite it.
+        QString savePath = rom->romFilePath.left(rom->romFilePath.lastIndexOf('.')) + ".sav";
+        QFile saveFile(savePath);
+
+        bool fileExists = saveFile.open(QIODevice::ReadWrite);
+
+        if (!fileExists || overwrite) {
+            saveFile.write(saveData);
+            return true;
+        }
+    }
+
+    return false;
+}
