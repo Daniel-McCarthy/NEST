@@ -3185,3 +3185,33 @@ void Cpu::serviceNonMaskableInterrupt() {
         ppu.pendingNMI = false;
     }
 }
+
+/*
+    Load Save File From Array
+*/
+bool Cpu::loadSaveFile(QByteArray saveFile) {
+    int fileLength = saveFile.length();
+    bool fileNotEmpty = fileLength > 0;
+    int numBytesToRead = (fileLength >= 0x1FFF) ? 0x1FFF : fileLength;
+
+    if (fileNotEmpty) {
+        unsigned short address = 0x6000;
+        for (unsigned short i = 0x0; i <= numBytesToRead; i++) {
+            writeCPURam((ushort)(address + i), (unsigned char)saveFile[i], true);
+        }
+        return true;
+    } else {
+        //cout << "Error: Save file has no data." << endl;
+        return false;
+    }
+}
+
+QByteArray Cpu::returnSaveDataFromCpuRam() {
+    QByteArray memory;
+    unsigned short address = 0x6000;
+    for (int i = 0; i <= 0x1FFF; i++) {
+        memory.push_back(readCPURam((ushort)(address + i), true));
+    }
+
+    return memory;
+}

@@ -267,6 +267,8 @@ public:
     void fetchAndExecute();
     void serviceInterrupt();
     void serviceNonMaskableInterrupt();
+    bool loadSaveFile(QByteArray saveFile);
+    QByteArray returnSaveDataFromCpuRam();
 public slots:
 };
 

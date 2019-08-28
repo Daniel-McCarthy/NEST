@@ -32,8 +32,6 @@ private:
     void startEmulationThread();
     void endEmulationThread();
     bool createSaveFile(bool overwrite);
-    QByteArray returnSaveDataFromCpuRam();
-    bool loadSaveFile(QByteArray saveFile);
     bool loadSaveFile(QString path);
 
     void closeEvent(QCloseEvent *event);

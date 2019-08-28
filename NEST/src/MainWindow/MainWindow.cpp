@@ -221,42 +221,10 @@ bool MainWindow::loadSaveFile(QString path) {
 
     if (fileOpen) {
         QByteArray binaryFileData = saveFile.readAll();
-        saveFileLoaded = loadSaveFile(binaryFileData);
+        saveFileLoaded = core->getCPUPointer()->loadSaveFile(binaryFileData);
     }
     saveFile.close();
     return saveFileLoaded;
-}
-
-/*
-Load Save File From Array
-*/
-bool MainWindow::loadSaveFile(QByteArray saveFile) {
-    Cpu* cpu = core->getCPUPointer();
-    int fileLength = saveFile.length();
-    bool fileNotEmpty = fileLength > 0;
-    int numBytesToRead = (fileLength >= 0x1FFF) ? 0x1FFF : fileLength;
-
-    if (fileNotEmpty) {
-        unsigned short address = 0x6000;
-        for (unsigned short i = 0x0; i <= numBytesToRead; i++) {
-            cpu->writeCPURam((ushort)(address + i), (unsigned char)saveFile[i], true);
-        }
-        return true;
-    } else {
-        //cout << "Error: Save file has no data." << endl;
-        return false;
-    }
-}
-
-QByteArray MainWindow::returnSaveDataFromCpuRam() {
-    QByteArray memory;
-    Cpu* cpu = core->getCPUPointer();
-    unsigned short address = 0x6000;
-    for (int i = 0; i <= 0x1FFF; i++) {
-        memory.push_back(cpu->readCPURam((ushort)(address + i), true));
-    }
-
-    return memory;
 }
 
 bool MainWindow::createSaveFile(bool overwrite) {
@@ -265,7 +233,7 @@ bool MainWindow::createSaveFile(bool overwrite) {
     bool romUsesRam = mapperSetting == rom->NROM_ID || mapperSetting == rom->MMC1_ID || mapperSetting == rom->MMC3_ID || mapperSetting == rom->MMC5_ID;
 
     if (romUsesRam) {
-        QByteArray saveData = returnSaveDataFromCpuRam();
+        QByteArray saveData = core->getCPUPointer()->returnSaveDataFromCpuRam();
 
         //Attempt to open file, to check if it exists and potentially overwrite it.
         QString savePath = rom->romFilePath.left(rom->romFilePath.lastIndexOf('.')) + ".sav";
