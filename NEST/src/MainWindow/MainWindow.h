@@ -31,6 +31,8 @@ private:
 
     void startEmulationThread();
     void endEmulationThread();
+    bool loadSaveFile(QByteArray saveFile);
+    bool loadSaveFile(QString path);
 
     void closeEvent(QCloseEvent *event);
 
@@ -39,6 +41,11 @@ private slots:
     void on_actionPause_triggered();
     void on_actionResume_triggered();
     void on_actionPalette_triggered();
+    void on_actionSetScale1x_triggered();
+    void on_actionSetScale2x_triggered();
+    void on_actionSetScale3x_triggered();
+    void on_actionSetScale4x_triggered();
+    void setWindowScale(uint multiple);
     void paletteWindowClosed();
 
 signals:

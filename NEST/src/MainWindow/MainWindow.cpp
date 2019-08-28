@@ -98,8 +98,7 @@ void MainWindow::on_actionOpen_triggered() {
     rom->readRomHeader();
     int mapperSetting = rom->getMapperSetting();
 
-    if (mapperSetting == 0)
-    {
+    if (mapperSetting == 0) {
         core->getNROMPointer()->loadRom();
     } else if (mapperSetting == 1) {
         core->getMMC1Pointer()->loadRom();
@@ -117,10 +116,13 @@ void MainWindow::on_actionOpen_triggered() {
     resetAddress |= (ushort)(cpu->readCPURam(0xFFFD, true) << 8);
     cpu->programCounter = resetAddress;
 
+    QString romPath = core->getRomPointer()->romFilePath;
+    QString savePath = romPath.left(romPath.lastIndexOf('.')) + ".sav";
+    loadSaveFile(savePath);
+
     setEmulationPaused(false);
     setEmulationRun(true);
     startEmulationThread();
-
 }
 
 void MainWindow::startEmulationThread() {
@@ -201,3 +203,40 @@ void MainWindow::setWindowScale(uint multiple) {
     resize(newWindowWidth, newWindowHeight);
 }
 
+bool MainWindow::loadSaveFile(QString path) {
+    //Attempt to open file, if it was successful close it and call the full loadSave function
+    QString savePath = path.left(path.indexOf('.')) + ".sav";
+    QFile saveFile(savePath);
+
+    bool fileOpen = saveFile.open(QIODevice::ReadOnly);
+
+    bool saveFileLoaded = false;
+
+    if (fileOpen) {
+        QByteArray binaryFileData = saveFile.readAll();
+        saveFileLoaded = loadSaveFile(binaryFileData);
+    }
+    saveFile.close();
+    return saveFileLoaded;
+}
+
+/*
+Load Save File From Array
+*/
+bool MainWindow::loadSaveFile(QByteArray saveFile) {
+    Cpu* cpu = core->getCPUPointer();
+    int fileLength = saveFile.length();
+    bool fileNotEmpty = fileLength > 0;
+    int numBytesToRead = (fileLength >= 0x1FFF) ? 0x1FFF : fileLength;
+
+    if (fileNotEmpty) {
+        unsigned short address = 0x6000;
+        for (unsigned short i = 0x0; i <= numBytesToRead; i++) {
+            cpu->writeCPURam((ushort)(address + i), (unsigned char)saveFile[i], true);
+        }
+        return true;
+    } else {
+        //cout << "Error: Save file has no data." << endl;
+        return false;
+    }
+}
