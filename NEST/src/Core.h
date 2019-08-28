@@ -40,6 +40,7 @@ public:
     uint TOTAL_PPU_CLOCKS = 0;
 
     void emulationLoop();
+    void resetCore();
 
 private:
     Rom rom;

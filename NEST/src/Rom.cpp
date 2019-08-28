@@ -188,3 +188,19 @@ bool Rom::getUsesProgramRam()
     return usesProgramRam;
 }
 
+void Rom::resetRom() {
+    programRomSize = 0;
+    programRamSize = 0;
+    chrRomSize = 0;
+    mapperSetting = 0;
+
+    verticalMirroring = false;
+    programRamBattery = false;
+    trainerIncluded = false;
+    ignoreMirroring = false;
+    usesProgramRam = false;
+
+    romData = QByteArray();
+    loadSuccessful = false;
+    romFilePath = "";
+}

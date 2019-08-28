@@ -28,6 +28,13 @@ public:
     bool loadSuccessful = false;
     QString romFilePath = "";
 
+    const int NROM_ID   = 0x00;
+    const int MMC1_ID   = 0x01;
+    const int UxROM_ID  = 0x02;
+    const int CNROM_ID  = 0x03;
+    const int MMC3_ID   = 0x04;
+    const int MMC5_ID   = 0x05;
+
     Rom(QObject *parent = nullptr);
     Rom(unsigned char* romData, unsigned int length);
 	~Rom();
@@ -50,6 +57,7 @@ public:
 	unsigned char readByte(unsigned int address);
     QByteArray readBytes(ushort address, int byteCount);
     QByteArray readBytesFromAddressToEnd(ushort address);
+    void resetRom();
 
     signals:
 };

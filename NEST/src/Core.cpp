@@ -99,3 +99,17 @@ void Core::emulationLoop() {
         }
     }
 }
+
+void Core::resetCore() {
+    run = false;
+    paused = false;
+    step = false;
+
+    TOTAL_CPU_CLOCKS = 0;
+    TOTAL_PPU_CLOCKS = 0;
+
+    cpu.resetCPU();
+    input.resetInput();
+    ppu.resetPPU();
+    rom.resetRom();
+}

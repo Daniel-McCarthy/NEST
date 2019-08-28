@@ -3215,3 +3215,18 @@ QByteArray Cpu::returnSaveDataFromCpuRam() {
 
     return memory;
 }
+
+void Cpu::resetCPU() {
+    accumulator = 0;
+    xAddress = 0;
+    yAddress = 0;
+    stackPointer = 0xFD;
+    statusRegister = 0 | Empty_Flag | Interrupt_Disable_Flag;
+
+    memset(cpuRam, 0, sizeof(cpuRam));
+
+    programCounter = 0x8000;
+    pendingInterrupt = false;
+    tClock = 0;
+    mClock = 0;
+}

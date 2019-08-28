@@ -50,11 +50,14 @@ public:
     void setKeyInput(int keyCode, bool enabled);
     void joyPadRegisterWrite(uchar newValue, bool isJoyPad2 = false);
     uchar joyPadRegisterRead(bool isJoyPad2 = false);
+    void resetInput();
 
     Input(QObject *parent);
     ~Input();
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
+
+signals:
     void createSaveFileButtonPressed();
 };
 

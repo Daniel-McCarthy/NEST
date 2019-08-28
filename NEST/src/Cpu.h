@@ -269,6 +269,7 @@ public:
     void serviceNonMaskableInterrupt();
     bool loadSaveFile(QByteArray saveFile);
     QByteArray returnSaveDataFromCpuRam();
+    void resetCPU();
 public slots:
 };
 

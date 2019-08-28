@@ -89,8 +89,15 @@ void MainWindow::on_actionOpen_triggered() {
         return;
     }
 
+    bool alreadyEmulating = core->run == true;
     setEmulationPaused(true);
     setEmulationRun(false);
+
+    if (alreadyEmulating) {
+        // Reset all emulation state for a fresh start
+        // before loading in a new rom and running.
+        core->resetCore();
+    }
 
     Rom* rom = core->getRomPointer();
     bool loadedSuccessfully = rom->loadRom(filePath);

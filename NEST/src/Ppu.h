@@ -140,6 +140,7 @@ public:
     QVector<QColor> drawBGTileLineFromNameTable(uint lineNumber, bool isLeftTable, bool isUpperTable, int tileXPos, int tileYPos);
     QVector<QColor> drawSpriteLine(unsigned char lineNumber);
     void updatePPU(uint& ppuClocks);
+    void resetPPU();
 signals:
     void drawImageToScreen(QImage image);
 };

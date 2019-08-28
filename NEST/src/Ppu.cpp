@@ -661,3 +661,35 @@ QVector<QColor> Ppu::drawSpriteLine(unsigned char lineNumber) {
 
     return line;
 }
+
+void Ppu::resetPPU() {
+    screen = QImage(256, 240, QImage::Format_RGB32);
+    fullWindow = QImage(512, 512, QImage::Format_RGB32);
+
+    ppuRam = QVector<unsigned char>(0x4000);
+    oamRam = QVector<unsigned char>(0x100);
+
+    processPolling = false;
+
+    scrollWrittenOnce = false;
+    ppuAddressWrittenOnce = false;
+    oamAddressWrittenOnce = false;
+    ppuWriteAddress = 0;
+    tempPPUWriteAddress = 0;
+    oamWriteAddress = 0;
+    tempOAMWriteAddress = 0;
+    pendingNMI = false;
+    spriteZeroHit = false;
+    spriteOverflow = false;
+    isNametableMirrored = false;
+    isHorizNametableMirror = false;
+    isVertNametableMirror = false;
+
+    scrollX = 0;
+    scrollY = 0;
+    ly = 0;
+    ppuState = 0;
+    frameCount = 0;
+
+    // Don't reset user palette modifications. This should persist between rom changes.
+}
