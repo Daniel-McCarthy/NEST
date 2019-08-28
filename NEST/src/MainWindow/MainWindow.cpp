@@ -36,6 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::setEmulationRun,
                              core, &Core::setRun);
 
+    QObject::connect(core->getInputPointer(), &Input::createSaveFileButtonPressed,
+                             this, &MainWindow::handleCreateSave);
+
+
     hLayout = new QHBoxLayout(ui->centralWidget);
     hLayout->setContentsMargins(0,0,0,0);
     hLayout->addWidget(canvas);
@@ -62,6 +66,9 @@ MainWindow::~MainWindow()
 
     QObject::disconnect(this, &MainWindow::setEmulationRun,
                              core, &Core::setRun);
+
+    QObject::disconnect(core->getInputPointer(), &Input::createSaveFileButtonPressed,
+                             this, &MainWindow::handleCreateSave);
 
     delete ui;
     delete canvas;
@@ -258,7 +265,7 @@ bool MainWindow::createSaveFile(bool overwrite) {
     bool romUsesRam = mapperSetting == rom->NROM_ID || mapperSetting == rom->MMC1_ID || mapperSetting == rom->MMC3_ID || mapperSetting == rom->MMC5_ID;
 
     if (romUsesRam) {
-        QByteArray saveData = returnSaveDataFromMemory();
+        QByteArray saveData = returnSaveDataFromCpuRam();
 
         //Attempt to open file, to check if it exists and potentially overwrite it.
         QString savePath = rom->romFilePath.left(rom->romFilePath.lastIndexOf('.')) + ".sav";
@@ -273,4 +280,8 @@ bool MainWindow::createSaveFile(bool overwrite) {
     }
 
     return false;
+}
+
+void MainWindow::handleCreateSave() {
+    createSaveFile(true);
 }

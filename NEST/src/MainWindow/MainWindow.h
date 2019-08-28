@@ -49,6 +49,7 @@ private slots:
     void on_actionSetScale4x_triggered();
     void setWindowScale(uint multiple);
     void paletteWindowClosed();
+    void handleCreateSave();
 
 signals:
     void onGameFileOpened(QString filePath);

@@ -55,6 +55,7 @@ public:
     ~Input();
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
+    void createSaveFileButtonPressed();
 };
 
 #endif // !INPUTH

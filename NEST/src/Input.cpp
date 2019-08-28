@@ -365,6 +365,9 @@ bool Input::eventFilter(QObject *obj, QEvent *event) {
         if (key == Qt::Key_Down) {
             setKeyInput(1, keyPressed);
         }
+        if (key == Qt::Key_F1 && keyReleased) {
+            emit createSaveFileButtonPressed();
+        }
     }
 
     return QObject::eventFilter(obj, event);
