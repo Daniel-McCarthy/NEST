@@ -377,7 +377,7 @@ void Input::resetInput() {
     joy1NextInputRead = 0;
     joy1Strobing = false;
     joy1PreviousStrobeValue = false;
-    joy1Connected = false;
+    joy1Connected = true;
     joy1KeyUp = false;
     joy1KeyDown = false;
     joy1KeyLeft = false;
