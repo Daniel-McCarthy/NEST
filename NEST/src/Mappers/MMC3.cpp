@@ -169,3 +169,14 @@ void MMC3::loadPrgRomBank(ushort address, unsigned char bankNumber) {
         }
     }
 }
+
+void MMC3::resetMMC3() {
+    bankRegister = 0;
+    prgRomBankingMode = false;
+    chrRomBankOrder = false;
+
+    irqLatch = 0;
+    irqCounter = 0;
+    irqEnabled = false;
+    irqPending = false;
+}

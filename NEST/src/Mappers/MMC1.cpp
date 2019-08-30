@@ -172,3 +172,16 @@ void MMC1::loadPrgRomBank(ushort address, unsigned char bankNumber) {
         }
     }
 }
+
+void MMC1::resetMMC1() {
+    writeRegisterShift = 0;
+    writeRegisterValue = 0;
+
+    controlRegisterValue = 0;
+    ramPage1RegisterValue = 0;
+    ramPage2RegisterValue = 0;
+    romPageRegisterValue = 0;
+
+    prgRomBankSwitchingMode = 3;
+    chrRom8kbBankSwitchingMode = false;
+}

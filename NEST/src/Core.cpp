@@ -112,4 +112,6 @@ void Core::resetCore() {
     input.resetInput();
     ppu.resetPPU();
     rom.resetRom();
+    mmc1.resetMMC1();
+    mmc3.resetMMC3();
 }

@@ -16,6 +16,7 @@ public:
     void writeMMC3(ushort address, unsigned char value);
     void loadChrRomBank(ushort address, ushort bankSize, unsigned char bankNumber);
     void loadPrgRomBank(ushort address, unsigned char bankNumber);
+    void resetMMC3();
 
 private:
     Rom& rom;
