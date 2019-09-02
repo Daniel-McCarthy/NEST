@@ -392,7 +392,7 @@ void Cpu::opcode15() {
 void Cpu::opcode16() {
     //Bitwise Left Shift of value at Zero Page X address
 
-    ushort address = (ushort)(readImmediateByte() + xAddress);
+    uchar address = ((readImmediateByte() + xAddress) % 256);
     uchar value = readCPURam(address);
 
     setFlagTo(Carry_Flag, (value & 0x80) == 0x80);          //Set carry flag to old bit 7
@@ -697,7 +697,7 @@ void Cpu::opcode35() {
 void Cpu::opcode36() {
     //Bitwise Left Rotate of value at Zero Page X address
 
-    ushort address = (ushort)(readImmediateByte() + xAddress);
+    uchar address = ((readImmediateByte() + xAddress) % 256);
     uchar value = readCPURam(address);
 
     bool oldCarry = getFlagStatus(Carry_Flag);
@@ -977,7 +977,7 @@ void Cpu::opcode55() {
 void Cpu::opcode56() {
     //Bitwise Right Shift of value at Zero Page X address
 
-    ushort address = (ushort)(readImmediateByte() + xAddress);
+    unsigned char address = ((readImmediateByte() + xAddress) % 256);
     uchar value = readCPURam(address);
 
     setFlagTo(Carry_Flag, (value & 0x01) == 0x01);          //Set carry flag to old bit 7
@@ -1302,7 +1302,7 @@ void Cpu::opcode75() {
 void Cpu::opcode76() {
     //Bitwise Right Rotate of value at Zero Page X address
 
-    ushort address = (ushort)(readImmediateByte() + xAddress);
+    uchar address = ((readImmediateByte() + xAddress) % 256);
     uchar value = readCPURam(address);
 
     bool oldCarry = getFlagStatus(Carry_Flag);
@@ -1561,8 +1561,7 @@ void Cpu::opcode94() {
 void Cpu::opcode95() {
     //STA: Copy value in accumulator to Zero Page + X Address
 
-    ushort address = readImmediateByte();
-    address += xAddress;
+    unsigned char address = ((readImmediateByte() + xAddress) % 256);
     writeCPURam(address, accumulator);
 
     //4 cycles
