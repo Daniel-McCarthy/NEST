@@ -5,6 +5,7 @@
 #include "src/ColorDialog/ColorDialog.h"
 
 #include "QFileDialog"
+#include "QDesktopWidget"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
