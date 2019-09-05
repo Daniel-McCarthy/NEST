@@ -30,7 +30,6 @@ SOURCES += \
     src/Core.cpp \
     src/Cpu.cpp \
     src/Input.cpp \
-    src/Binary.cpp \
     src/Rom.cpp \
     src/Ppu.cpp \
     src/Mappers/NROM.cpp \
@@ -49,7 +48,6 @@ HEADERS += \
     src/Core.h \
     src/Cpu.h \
     src/Input.h \
-    src/Binary.h \
     src/Rom.h \
     src/Ppu.h \
     src/Mappers/NROM.h \
