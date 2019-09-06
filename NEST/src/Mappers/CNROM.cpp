@@ -9,7 +9,11 @@ CNROM::CNROM(QObject *parent, Rom& rom, Ppu& ppu, Cpu& cpu) : QObject(parent), r
 
 void CNROM::loadRom() {
     if (rom.getMapperSetting() == 3) {
+        bool onlyOneBank = rom.getProgramRomSize() == 1;
         loadPrgRomBank(0x8000);
+        if (onlyOneBank) {
+            loadPrgRomBank(0xC000);
+        }
         loadChrRomBank(0x0000, 0);
 
         ppu.isNametableMirrored = true;
