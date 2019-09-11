@@ -146,12 +146,7 @@ void ColorDialog::loadPaletteFromFile() {
 }
 
 void ColorDialog::setPalettePreviews(int index) {
-    if (index > -1)
-    {
-        QColor color = ppu->palettes[index].paletteColors[0];
-        unsigned char r = color.red();
-        unsigned char g = color.green();
-        unsigned char b = color.blue();
+    if (index > -1) {
         setPreviewColor(ui->colorWidget0, ppu->palettes[index].paletteColors[0]);
         setPreviewColor(ui->colorWidget0_2, ppu->palettes[index].paletteColors[(16 * 1) + 0]);
         setPreviewColor(ui->colorWidget0_3, ppu->palettes[index].paletteColors[(16 * 2) + 0]);
@@ -231,9 +226,7 @@ void ColorDialog::setPalettePreviews(int index) {
         setPreviewColor(ui->colorWidget15_2, ppu->palettes[index].paletteColors[(16 * 1) + 15]);
         setPreviewColor(ui->colorWidget15_3, ppu->palettes[index].paletteColors[(16 * 2) + 15]);
         setPreviewColor(ui->colorWidget15_4, ppu->palettes[index].paletteColors[(16 * 3) + 15]);
-    }
-    else
-    {
+    } else {
         QColor white = QColor(255, 255, 255, 255);
         setPreviewColor(ui->colorWidget0, white);
         setPreviewColor(ui->colorWidget0_2, white);
