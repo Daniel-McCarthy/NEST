@@ -1,5 +1,4 @@
 #include "Cpu.h"
-#include "Binary.h"
 #include "Input.h"
 #include "Ppu.h"
 #include "Mappers/Mapper.h"
