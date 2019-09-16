@@ -53,6 +53,7 @@ public:
     bool getTrainerIncluded();
     bool getIgnoreMirroring();
     bool getUsesProgramRam();
+    bool usesSaveRam();
 
 	unsigned char readByte(unsigned int address);
     QByteArray readBytes(ushort address, int byteCount);

@@ -204,3 +204,8 @@ void Rom::resetRom() {
     loadSuccessful = false;
     romFilePath = "";
 }
+
+bool Rom::usesSaveRam() {
+    unsigned char mapperSetting = getMapperSetting();
+    return mapperSetting == NROM_ID || mapperSetting == MMC1_ID || mapperSetting == MMC3_ID || mapperSetting == MMC5_ID;
+}

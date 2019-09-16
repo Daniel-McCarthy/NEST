@@ -243,10 +243,8 @@ bool MainWindow::loadSaveFile(QString path) {
 
 bool MainWindow::createSaveFile(bool overwrite) {
     Rom* rom = core->getRomPointer();
-    unsigned char mapperSetting = rom->getMapperSetting();
-    bool romUsesRam = mapperSetting == rom->NROM_ID || mapperSetting == rom->MMC1_ID || mapperSetting == rom->MMC3_ID || mapperSetting == rom->MMC5_ID;
 
-    if (romUsesRam) {
+    if (rom->usesSaveRam()) {
         QByteArray saveData = core->getCPUPointer()->returnSaveDataFromCpuRam();
 
         //Attempt to open file, to check if it exists and potentially overwrite it.
