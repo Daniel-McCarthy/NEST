@@ -206,6 +206,6 @@ void Rom::resetRom() {
 }
 
 bool Rom::usesSaveRam() {
-    unsigned char mapperSetting = getMapperSetting();
+    int mapperSetting = getMapperSetting();
     return mapperSetting == NROM_ID || mapperSetting == MMC1_ID || mapperSetting == MMC3_ID || mapperSetting == MMC5_ID;
 }
