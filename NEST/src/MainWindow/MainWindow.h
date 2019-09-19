@@ -45,6 +45,7 @@ private slots:
     void on_actionSetScale2x_triggered();
     void on_actionSetScale3x_triggered();
     void on_actionSetScale4x_triggered();
+    void on_actionCreateSave_triggered();
     void setWindowScale(uint multiple);
     void paletteWindowClosed();
     void handleCreateSave();

@@ -40,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(core->getInputPointer(), &Input::createSaveFileButtonPressed,
                              this, &MainWindow::handleCreateSave);
 
-
     hLayout = new QHBoxLayout(ui->centralWidget);
     hLayout->setContentsMargins(0,0,0,0);
     hLayout->addWidget(canvas);
@@ -81,6 +80,10 @@ MainWindow::~MainWindow()
     delete canvas;
     delete core;
     delete hLayout;
+}
+
+void MainWindow::on_actionCreateSave_triggered() {
+    createSaveFile(true);
 }
 
 void MainWindow::on_actionOpen_triggered() {
@@ -140,6 +143,8 @@ void MainWindow::on_actionOpen_triggered() {
     QString romPath = core->getRomPointer()->romFilePath;
     QString savePath = romPath.left(romPath.lastIndexOf('.')) + ".sav";
     loadSaveFile(savePath);
+
+    ui->actionCreateSave->setEnabled(rom->usesSaveRam());
 
     setEmulationPaused(false);
     setEmulationRun(true);
