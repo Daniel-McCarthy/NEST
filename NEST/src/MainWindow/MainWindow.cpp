@@ -160,13 +160,23 @@ void MainWindow::endEmulationThread() {
 }
 
 
+/*
+ * Sets the emulation to resume (or unpause) by changing the paused variable in Core to true.
+ */
 void MainWindow::on_actionPause_triggered() {
+    // Now that the emulation is going to be paused, stop showing the menu option
+    // to pause the emulation and now display the menu option to resume emulation.
     ui->actionPause->setVisible(false);
     ui->actionResume->setVisible(true);
     setEmulationPaused(true);
 }
 
+/*
+ * Sets the emulation to resume (or unpause) by changing the paused variable in Core to false.
+ */
 void MainWindow::on_actionResume_triggered() {
+    // Now that the emulation is going to resume, stop showing the menu option
+    // to resume the emulation and now display the menu option to pause emulation.
     ui->actionPause->setVisible(true);
     ui->actionResume->setVisible(false);
     setEmulationPaused(false);
