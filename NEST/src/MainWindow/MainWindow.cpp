@@ -82,6 +82,9 @@ MainWindow::~MainWindow()
     delete hLayout;
 }
 
+/*
+ * Initiate creation of a save file with the current rom's file name using the current save ram data.
+ */
 void MainWindow::on_actionCreateSave_triggered() {
     createSaveFile(true);
 }
